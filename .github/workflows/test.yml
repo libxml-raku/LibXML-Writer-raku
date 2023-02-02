@@ -1,0 +1,46 @@
+name: test
+
+on:
+  push:
+    branches:
+      - '*'
+    tags-ignore:
+      - '*'
+  pull_request:
+
+jobs:
+  raku:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macOS-latest
+          - macOS-11
+          - windows-2019
+        raku-version:
+          - 'latest'
+          - '2022.02'
+        exclude:
+          - os: windows-2019
+            raku-version: 'latest'
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: Raku/setup-raku@v1
+        with:
+          raku-version: ${{ matrix.raku-version }}
+      - name: Linux specific setup
+        if: contains(matrix.os, 'ubuntu')
+        run: sudo apt-get install -y libxml2-dev
+      - name: macOS specific setup
+        if: contains(matrix.os, 'macOS')
+        run: |
+            brew update
+            brew install libxml2
+      - name: Install Dependencies
+        run: |
+          zef install --/test LibraryMake
+          zef install --deps-only .
+          zef build .
+      - name: Run Tests
+        run: prove6 -I. t xt

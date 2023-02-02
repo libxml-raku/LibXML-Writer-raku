@@ -1,0 +1,34 @@
+{
+  "auth": "zef:dwarring",
+  "authors": [
+    "David Warring"
+  ],
+  "depends": [
+    "LibXML:ver<0.9.5>"
+  ],
+  "description": "Raku bindings to the libxml2 streaming writer",
+  "license": "Artistic-2.0",
+  "name": "LibXML::Writer",
+  "provides": {
+    "LibXML::Raw::TextWriter": "lib/LibXML/Raw/TextWriter.rakumod",
+    "LibXML::Writer": "lib/LibXML/Writer.rakumod",
+    "LibXML::Writer::Buffer": "lib/LibXML/Writer/Buffer.rakumod",
+    "LibXML::Writer::Document": "lib/LibXML/Writer/Document.rakumod",
+    "LibXML::Writer::File": "lib/LibXML/Writer/File.rakumod",
+    "LibXML::Writer::PushParser": "lib/LibXML/Writer/PushParser.rakumod"
+  },
+  "raku": "*",
+  "resources": [
+  ],
+  "source-url": "https://github.com/libxml-raku/LibXML-Writer-raku.git",
+  "support": {
+    "source": "https://github.com/libxml-raku/LibXML-Writer-raku.git"
+  },
+  "tags": [
+    "xml"
+  ],
+  "test-depends": [
+    "App::Prove6"
+  ],
+  "version": "0.0.1"
+}
