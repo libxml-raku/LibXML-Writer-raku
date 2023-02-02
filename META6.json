@@ -28,6 +28,7 @@
     "xml"
   ],
   "test-depends": [
+    "File::Temp",
     "App::Prove6"
   ],
   "version": "0.0.1"
