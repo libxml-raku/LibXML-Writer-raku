@@ -68,6 +68,8 @@ method writeRaw(Str:D $content) { self!write('writeRaw', $content)}
 
 method writePI(QName $name, Str $content) { self!write('writePI', $name, $content)}
 
+method writeDTD(NCName $name, Str :$public-id, Str :$system-id, Str :$subset) { self!write('writeDTD', $name, $public-id, $system-id, $subset)}
+
 method flush { self!write('flush')}
 method close {
     with $!raw {

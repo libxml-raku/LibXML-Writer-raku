@@ -1,5 +1,5 @@
 use Test;
-plan 4;
+plan 6;
 
 use LibXML::Writer;
 use LibXML::Writer::Buffer;
@@ -9,17 +9,24 @@ unless LibXML::Writer.have-writer {
     exit;
 }
 
-sub tail($writer, &m) {
+sub tail($writer, &m?) {
     $writer.writeText: "\n";
-    &m($writer);
+    .($writer) with &m;
     $writer.flush;
     $writer.Str.lines.tail;
 }
 
 my LibXML::Writer::Buffer:D $writer .= new;
 ok $writer.raw.defined;
-$writer.startDocument();
+$writer.startDocument( :enc<UTF-8> , :version<1.0>, :stand-alone<yes>);
+
+$writer.flush;
+is $writer.Str.chomp, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+
+$writer.writeDTD('html', :public-id('-//W3C//DTD HTML 4.0 Transitional//EN'), :system-id<http://www.w3.org/TR/REC-html40/loose.dtd>);
 $writer.startElement('Test');
+
+is tail($writer), '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><Test>';
 
 subtest 'writeElement', {
 
