@@ -19,5 +19,5 @@ subtest 'file', {
     $writer.endDocument;
     $writer.close;
     my $io = $file.IO;
-    is $io.lines.join, '<?xml version="1.0"?><Baz/>';
+    is $io.lines.join, '<?xml version="1.0" encoding="UTF-8"?><Baz/>';
 }

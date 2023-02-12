@@ -18,6 +18,7 @@ use Method::Also;
 use NativeCall;
 
 has xmlTextWriter $.raw is rw is built;
+has Str $.enc = 'UTF-8';
 
 #| Ensure libxml2 has been compiled with the text-writer enabled
 method have-writer {
@@ -41,7 +42,9 @@ multi trait_mod:<is>(
 ## traits not working
 ## method startElement(QName $name) is writer-raw {...}
 
-method startDocument(Str :$version, Str :$enc, Str :$stand-alone) { self!write('startDocument', $version, $enc, $stand-alone)}
+method startDocument(Str :$version, Str:D :$!enc = 'UTF-8', Str :$stand-alone) {
+    self!write('startDocument', $version, $!enc, $stand-alone);
+}
 method endDocument { self!write('endDocument')}
 
 method startElement(QName $name) { self!write('startElement', $name)}
