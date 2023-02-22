@@ -23,10 +23,19 @@ $writer.startDocument( :enc<UTF-8> , :version<1.0>, :stand-alone<yes>);
 $writer.flush;
 is $writer.Str.chomp, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
 
-$writer.writeDTD('html', :public-id('-//W3C//DTD HTML 4.0 Transitional//EN'), :system-id<http://www.w3.org/TR/REC-html40/loose.dtd>);
-$writer.startElement('Test');
+subtest 'writeDtd', {
 
-is tail($writer), '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><Test>';
+    $writer.writeDTD('html', :public-id('-//W3C//DTD HTML 4.0 Transitional//EN'), :system-id<http://www.w3.org/TR/REC-html40/loose.dtd>);
+
+    $writer.startElement('Test');
+
+    is tail($writer), '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><Test>';
+
+    my LibXML::Writer::Buffer:D $writer2 .= new;
+    $writer2.startDocument;
+    is tail($writer2, {.startDTD('html', :public-id('-//W3C//DTD HTML 4.0 Transitional//EN'), :system-id<http://www.w3.org/TR/REC-html40/loose.dtd>)}), '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"';
+    is tail($writer2, {.endDTD}), ']>';
+}
 
 subtest 'writeElement', {
 

@@ -39,6 +39,11 @@ class xmlTextWriter is repr(Opaque) is export {
     method writePI(xmlCharP $name, xmlCharP $content --> int32) is symbol('xmlTextWriterWritePI') is native($XML2) {*}
 
     method writeDTD(xmlCharP $name, xmlCharP $pubid, xmlCharP $sysid, xmlCharP $subset --> int32) is symbol('xmlTextWriterWriteDTD') is native($XML2) {*}
+
+    method startDTD(xmlCharP $name, xmlCharP $pubid, xmlCharP $sysid --> int32) is symbol('xmlTextWriterStartDTD') is native($XML2) {*}
+
+    method endDTD(--> int32) is symbol('xmlTextWriterEndDTD') is native($XML2) {*}
+
     method flush returns int32 is symbol('xmlTextWriterFlush') is native($XML2) {*}
 
     multi method new(xmlDoc:D :$doc!, xmlNode :$node!, Int :$compress = 0) {

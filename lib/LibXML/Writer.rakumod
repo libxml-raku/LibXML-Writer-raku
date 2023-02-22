@@ -73,6 +73,10 @@ method writePI(QName $name, Str $content) { self!write('writePI', $name, $conten
 
 method writeDTD(NCName $name, Str :$public-id, Str :$system-id, Str :$subset) { self!write('writeDTD', $name, $public-id, $system-id, $subset)}
 
+method startDTD(NCName $name, Str :$public-id, Str :$system-id) { self!write('startDTD', $name, $public-id, $system-id)}
+
+method endDTD() { self!write('endDTD')}
+
 method flush { self!write('flush')}
 method close {
     with $!raw {
