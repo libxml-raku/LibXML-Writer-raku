@@ -41,7 +41,7 @@ subtest 'writeDTDElement', {
     is $writer.&tail({.startDTD('html', :public-id('-//W3C//DTD HTML 4.0 Transitional//EN'), :system-id<http://www.w3.org/TR/REC-html40/loose.dtd>)}), '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"';
     is $writer.&tail({.writeDTDElement('Xxx')}), '<!ELEMENT Xxx (EMPTY*)>', 'writeDTDElement';
     is $writer.&tail({.writeDTDElement('Yyy', '(Xxx)*')}), '<!ELEMENT Yyy (Xxx)*>', 'writeDTDElement';
-    is $writer.&tail({.writeDTDAttlist('Color', 'CDATA')}), '<!ELEMENT Yyy (Xxx)*>', 'writeDTDElement';
+    is $writer.&tail({.writeDTDAttlist('Color', 'CDATA')}), '<!ATTLIST Color CDATA>', 'writeDTDAttlist';
     is $writer.&tail({.endDTD}), ']>';
 }
 
