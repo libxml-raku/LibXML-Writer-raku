@@ -77,6 +77,11 @@ method startDTD(NCName $name, Str :$public-id, Str :$system-id) { self!write('st
 
 method endDTD() { self!write('endDTD')}
 
+method startDTDElement(QName $name) { self!write('startDTDElement', $name)}
+method endDTDElement { self!write('endDTDElement')}
+method writeDTDElement(QName $name, Str:D $content = '(EMPTY*)') { self!write('writeDTDElement', $name, $content)}
+method writeDTDAttlist(QName $name, Str $content) { self!write('writeDTDAttlist', $name, $content)}
+
 method flush { self!write('flush')}
 method close {
     with $!raw {
