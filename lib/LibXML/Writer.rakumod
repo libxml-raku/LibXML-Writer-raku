@@ -84,10 +84,19 @@ method endDTD() { self!write('endDTD')}
 method startDTDElement(QName $name) { self!write('startDTDElement', $name)}
 method endDTDElement { self!write('endDTDElement')}
 method writeDTDElement(QName $name, Str:D $content = '(EMPTY*)') { self!write('writeDTDElement', $name, $content)}
+
 method writeDTDAttlist(QName $name, Str $content) { self!write('writeDTDAttlist', $name, $content)}
+
+method startDTDEntity(QName $name, Int :$pe) { self!write('startDTDEntity', $pe, $name)}
+method endDTDEntity { self!write('endDTDEntity')}
 method writeDTDInternalEntity(QName $name, Str:D $content, Int :$pe) { self!write('writeDTDInternalEntity', $pe, $name, $content)}
-method writeDTDExternalEntity(NCName $name, Str :$public-id, Str :$system-id, Str :$ndataid, Int :$pe) { self!write('writeDTDExternalEntity', $pe, $name, $public-id, $system-id, $ndataid)}
+
+method writeDTDExternalEntity(NCName $name, Str :$public-id, Str :$system-id, Str :$ndata, Int :$pe) { self!write('writeDTDExternalEntity', $pe, $name, $public-id, $system-id, $ndata)}
+
+method writeDTDNotation(NCName $name, Str :$public-id, Str :$system-id) { self!write('writeDTDNotation', $name, $public-id, $system-id)}
+
 method flush { self!write('flush')}
+
 method close {
     with $!raw {
         .flush;

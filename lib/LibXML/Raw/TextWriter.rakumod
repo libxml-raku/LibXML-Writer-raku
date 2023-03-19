@@ -51,8 +51,12 @@ class xmlTextWriter is repr(Opaque) is export {
     method endDTDElement(--> int32) is symbol('xmlTextWriterEndDTDElement') is native($XML2) {*}
     method writeDTDElement(xmlCharP $name, xmlCharP $content --> int32) is symbol('xmlTextWriterWriteDTDElement') is native($XML2) {*}
     method writeDTDAttlist(xmlCharP $name, xmlCharP $content --> int32) is symbol('xmlTextWriterWriteDTDAttlist') is native($XML2) {*}
+    method startDTDEntity(int32 $pe, xmlCharP $name --> int32) is symbol('xmlTextWriterStartDTDEntity') is native($XML2) {*}
+    method endDTDEntity(--> int32) is symbol('xmlTextWriterEndDTDEntity') is native($XML2) {*}
     method writeDTDInternalEntity(int32 $pe, xmlCharP $name, xmlCharP $content --> int32) is symbol('xmlTextWriterWriteDTDInternalEntity') is native($XML2) {*}
-    method writeDTDExternalEntity(int32 $pe, xmlCharP $name, xmlCharP $pubid, xmlCharP $sysid, xmlCharP $ndataid --> int32) is symbol('xmlTextWriterWriteDTDExternalEntity') is native($XML2) {*}
+    method writeDTDExternalEntity(int32 $pe, xmlCharP $name, xmlCharP $pubid, xmlCharP $sysid, xmlCharP $ndata --> int32) is symbol('xmlTextWriterWriteDTDExternalEntity') is native($XML2) {*}
+
+    method writeDTDNotation(xmlCharP $name, xmlCharP $pubid, xmlCharP $sysid --> int32) is symbol('xmlTextWriterWriteDTDNotation') is native($XML2) {*}
 
     method flush returns int32 is symbol('xmlTextWriterFlush') is native($XML2) {*}
 

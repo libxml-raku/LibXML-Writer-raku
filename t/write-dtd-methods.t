@@ -42,10 +42,13 @@ subtest 'writeDTDElement', {
     is $writer.&tail({.writeDTDElement('Xxx')}), '<!ELEMENT Xxx (EMPTY*)>', 'writeDTDElement';
     is $writer.&tail({.writeDTDElement('Yyy', '(Xxx)*')}), '<!ELEMENT Yyy (Xxx)*>', 'writeDTDElement';
     is $writer.&tail({.writeDTDAttlist('Color', 'CDATA')}), '<!ATTLIST Color CDATA>', 'writeDTDAttlist';
+    is $writer.&tail({.startDTDEntity('Foo')}), '<!ENTITY Foo', 'startDTDEntity';
+    is $writer.&tail({.endDTDEntity()}), '">', 'endDTDEntity';
     is $writer.&tail({.writeDTDInternalEntity('Foo', 'Xxx')}), '<!ENTITY Foo "Xxx">', 'writeDTDInternalEntity';
-    is $writer.&tail({.writeDTDInternalEntity('Foo', 'Xxx', :pe)}), '<!ENTITY % Foo "Xxx">', 'writeDTDInternalEntity';
+    is $writer.&tail({.writeDTDInternalEntity('Foo', 'Xxx | Yyy', :pe)}), '<!ENTITY % Foo "Xxx | Yyy">', 'writeDTDInternalEntity';
     is $writer.&tail({.writeDTDExternalEntity('html', :public-id('-//W3C//DTD HTML 4.0 Transitional//EN'), :system-id<http://www.w3.org/TR/REC-html40/loose.dtd>)}), q{<!ENTITY html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">};
-    is $writer.&tail({.writeDTDExternalEntity('html', :public-id('-//W3C//DTD HTML 4.0 Transitional//EN'), :system-id<http://www.w3.org/TR/REC-html40/loose.dtd>), :pe}), q{<!ENTITY html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">};
+    is $writer.&tail({.writeDTDExternalEntity('pictures', :system-id<images/plage.gif>, :ndata<gif89a>)}), q{<!ENTITY pictures SYSTEM "images/plage.gif" NDATA gif89a>};
+    is $writer.&tail({.writeDTDNotation('gif89a', :public-id('-//CompuServe//NOTATION Graphics Interchange Format 89a//EN'), :system-id<gif>) }), q{<!NOTATION gif89a PUBLIC "-//CompuServe//NOTATION Graphics Interchange Format 89a//EN" "gif">};
 
     is $writer.&tail({.endDTD}), ']>';
 }
