@@ -42,6 +42,11 @@ subtest 'writeDTDElement', {
     is $writer.&tail({.writeDTDElement('Xxx')}), '<!ELEMENT Xxx (EMPTY*)>', 'writeDTDElement';
     is $writer.&tail({.writeDTDElement('Yyy', '(Xxx)*')}), '<!ELEMENT Yyy (Xxx)*>', 'writeDTDElement';
     is $writer.&tail({.writeDTDAttlist('Color', 'CDATA')}), '<!ATTLIST Color CDATA>', 'writeDTDAttlist';
+    is $writer.&tail({.writeDTDInternalEntity('Foo', 'Xxx')}), '<!ENTITY Foo "Xxx">', 'writeDTDInternalEntity';
+    is $writer.&tail({.writeDTDInternalEntity('Foo', 'Xxx', :pe)}), '<!ENTITY % Foo "Xxx">', 'writeDTDInternalEntity';
+    is $writer.&tail({.writeDTDExternalEntity('html', :public-id('-//W3C//DTD HTML 4.0 Transitional//EN'), :system-id<http://www.w3.org/TR/REC-html40/loose.dtd>)}), q{<!ENTITY html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">};
+    is $writer.&tail({.writeDTDExternalEntity('html', :public-id('-//W3C//DTD HTML 4.0 Transitional//EN'), :system-id<http://www.w3.org/TR/REC-html40/loose.dtd>), :pe}), q{<!ENTITY html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">};
+
     is $writer.&tail({.endDTD}), ']>';
 }
 

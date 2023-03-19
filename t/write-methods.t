@@ -1,5 +1,5 @@
 use Test;
-plan 5;
+plan 7;
 
 use LibXML::Writer;
 use LibXML::Writer::Buffer;
@@ -26,10 +26,24 @@ is $writer.Str.chomp, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
 $writer.startElement('Test');
 
 subtest 'writeElement', {
-
     is $writer.&tail({ .writeElement('Xxx') }), '<Xxx/>';
     is $writer.&tail({ .writeElement('Xxx', 'Yy>yy') }), '<Xxx>Yy&gt;yy</Xxx>';
 
+}
+
+subtest 'writeAttribute', {
+    is $writer.&tail({ .startElement('Foo'); .writeAttribute("A", "a&b"); .endElement() }), '<Foo A="a&amp;b"/>';
+    $writer.setQuoteChar("'");
+    is $writer.&tail({ .startElement('Foo'); .writeAttribute("B", "bbb"); .writeText("ttt"); .endElement() }), "<Foo B='bbb'>ttt</Foo>";
+    $writer.setQuoteChar('"');
+    is $writer.&tail({ .startElement('Foo'); .writeAttribute("B", "bbb"); .writeText("ttt"); .endElement() }), '<Foo B="bbb">ttt</Foo>';
+}
+
+subtest 'setIndent', {
+    is $writer.&tail({ .setIndent; .writeElement('Yyy') }), ' <Yyy/>';
+    is $writer.&tail({ .setIndentString("   "); .writeElement('Zzz') }), '   <Zzz/>';
+    is $writer.&tail({ .setIndentString("<!--X-->"); .writeElement('Zzz') }), '<!--X--><Zzz/>';
+    $writer.setIndent(False);
 }
 
 subtest 'writeElementNS', {
@@ -39,7 +53,6 @@ subtest 'writeElementNS', {
     is $writer.&tail({ .writeElementNS('Foo', :uri<https::/example.org>) }), '<Foo xmlns="https::/example.org"></Foo>';
     is $writer.&tail({ .writeElementNS('Foo', :prefix<p> :uri<https::/example.org>) }), '<p:Foo xmlns:p="https::/example.org"></p:Foo>';
 
-    is $writer.&tail({ .startElement('Foo'); .writeAttribute("k", "a&b"); .endElement() }), '<Foo k="a&amp;b"/>';
     is $writer.&tail({ .startElementNS('Foo', :prefix<p>); .writeAttributeNS("k", "a&b", :prefix<q>); .endElement() }), '<p:Foo q:k="a&amp;b"/>';
 }
 

@@ -19,6 +19,9 @@ class xmlTextWriter is repr(Opaque) is export {
 
     method Free is symbol('xmlFreeTextWriter') is native($XML2) {*}
 
+    method setQuoteChar(int8 $char --> int32) is symbol('xmlTextWriterSetQuoteChar') is native($XML2) {*}
+    method setIndent(int32 $indent --> int32) is symbol('xmlTextWriterSetIndent') is native($XML2) {*}
+    method setIndentString(xmlCharP $indent --> int32) is symbol('xmlTextWriterSetIndentString') is native($XML2) {*}
     method startDocument(xmlCharP $version, xmlCharP $name, xmlCharP $stand-alone --> int32) is symbol('xmlTextWriterStartDocument') is native($XML2) {*}
     method endDocument(--> int32) is symbol('xmlTextWriterEndDocument') is native($XML2) {*}
 
@@ -48,6 +51,8 @@ class xmlTextWriter is repr(Opaque) is export {
     method endDTDElement(--> int32) is symbol('xmlTextWriterEndDTDElement') is native($XML2) {*}
     method writeDTDElement(xmlCharP $name, xmlCharP $content --> int32) is symbol('xmlTextWriterWriteDTDElement') is native($XML2) {*}
     method writeDTDAttlist(xmlCharP $name, xmlCharP $content --> int32) is symbol('xmlTextWriterWriteDTDAttlist') is native($XML2) {*}
+    method writeDTDInternalEntity(int32 $pe, xmlCharP $name, xmlCharP $content --> int32) is symbol('xmlTextWriterWriteDTDInternalEntity') is native($XML2) {*}
+    method writeDTDExternalEntity(int32 $pe, xmlCharP $name, xmlCharP $pubid, xmlCharP $sysid, xmlCharP $ndataid --> int32) is symbol('xmlTextWriterWriteDTDExternalEntity') is native($XML2) {*}
 
     method flush returns int32 is symbol('xmlTextWriterFlush') is native($XML2) {*}
 

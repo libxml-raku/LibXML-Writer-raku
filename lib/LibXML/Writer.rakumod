@@ -39,6 +39,10 @@ multi trait_mod:<is>(
     $m.wrap(method (|c) is hidden-from-backtrace { self!write($name, |c) })
 }
 
+method setIndent(Bool:D() $indent = True) {  self!write('setIndent', $indent); }
+method setIndentString(Str:D $indent)  {  self!write('setIndentString', $indent); }
+method setQuoteChar(Str:D $quote) { self!write('setQuoteChar', $quote.ord); }
+
 ## traits not working
 ## method startElement(QName $name) is writer-raw {...}
 
@@ -81,7 +85,8 @@ method startDTDElement(QName $name) { self!write('startDTDElement', $name)}
 method endDTDElement { self!write('endDTDElement')}
 method writeDTDElement(QName $name, Str:D $content = '(EMPTY*)') { self!write('writeDTDElement', $name, $content)}
 method writeDTDAttlist(QName $name, Str $content) { self!write('writeDTDAttlist', $name, $content)}
-
+method writeDTDInternalEntity(QName $name, Str:D $content, Int :$pe) { self!write('writeDTDInternalEntity', $pe, $name, $content)}
+method writeDTDExternalEntity(NCName $name, Str :$public-id, Str :$system-id, Str :$ndataid, Int :$pe) { self!write('writeDTDExternalEntity', $pe, $name, $public-id, $system-id, $ndataid)}
 method flush { self!write('flush')}
 method close {
     with $!raw {
