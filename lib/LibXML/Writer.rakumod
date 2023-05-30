@@ -14,6 +14,8 @@ use LibXML::Raw;
 use LibXML::Raw::TextWriter;
 use LibXML::Types :QName, :NCName;
 use LibXML::ErrorHandling;
+use LibXML::Item;
+use LibXML::Enums;
 use Method::Also;
 use NativeCall;
 
@@ -94,6 +96,65 @@ method writeDTDInternalEntity(QName $name, Str:D $content, Int :$pe) { self!writ
 method writeDTDExternalEntity(NCName $name, Str :$public-id, Str :$system-id, Str :$ndata, Int :$pe) { self!write('writeDTDExternalEntity', $pe, $name, $public-id, $system-id, $ndata)}
 
 method writeDTDNotation(NCName $name, Str :$public-id, Str :$system-id) { self!write('writeDTDNotation', $name, $public-id, $system-id)}
+
+multi method write(Pair $_) {
+    my $name = .key;
+    my $value = .value;
+    $value .= Str if $value ~~ Numeric:D;
+
+    my UInt $node-type := itemNode::NodeType($name);
+    my $config = $.config // LibXML::Config.new;
+
+    when $value ~~ Str:D {
+        when $name.starts-with('#') {
+            given $node-type {
+                when XML_COMMENT_NODE { self.writeComment: $value }
+                when XML_CDATA_SECTION_NODE { self.writeCDATA: $value }
+                when XML_DOCUMENT_NODE {
+                    self.startDocument;
+                    self.write: $value;
+                    self.endDocument;
+                }
+                default { die "can't handle '$name' of type $node-type"; }
+            }
+        }
+        when $name.starts-with('?') {
+            $name .= substr(1);
+            self.writePI($name, $value);
+        }
+        default {
+            $name .= substr(1) if $name.starts-with('@');
+            self.writeAttribute($name, $value);
+        }
+    }
+    when $name.starts-with('&') {
+        $name ~= ';' unless $name.ends-with(';');
+        self.writeRaw( $name );
+    }
+    default {
+       given $node-type {
+            when XML_ELEMENT_NODE { self.startElement($name) }
+            when XML_DOCUMENT_NODE { self.startDocument }
+            default {
+                die "can't handle '$name' of type $_"
+                    unless $_ == XML_DOCUMENT_FRAG_NODE;
+            }
+        }
+
+        for $value.List {
+            self.write($_) if .defined;
+        }
+
+       given $node-type {
+            when XML_ELEMENT_NODE { self.endElement }
+            when XML_DOCUMENT_NODE { self.endDocument }
+        }
+    }
+}
+
+multi method write(Positional $value) { self.write: $_ for $value.list }
+
+multi method write(Str $value) { self.writeText: $value }
 
 method flush { self!write('flush')}
 
