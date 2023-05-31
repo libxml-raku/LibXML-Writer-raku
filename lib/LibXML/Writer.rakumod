@@ -48,8 +48,10 @@ method setQuoteChar(Str:D $quote) { self!write('setQuoteChar', $quote.ord); }
 ## traits not working
 ## method startElement(QName $name) is writer-raw {...}
 
-method startDocument(Str :$version, Str:D :$!enc = 'UTF-8', Str :$stand-alone) {
-    self!write('startDocument', $version, $!enc, $stand-alone);
+method startDocument(Str :$version, Str:D :$!enc = 'UTF-8', Bool :$standalone) {
+    my Str $standalone-yn = $_ ?? 'yes' !! 'no'
+        with $standalone;
+    self!write('startDocument', $version, $!enc, $standalone-yn);
 }
 method endDocument { self!write('endDocument')}
 

@@ -18,7 +18,7 @@ sub tail($writer, &m?) {
 
 my LibXML::Writer::Buffer:D $writer .= new;
 ok $writer.raw.defined;
-$writer.startDocument( :enc<UTF-8> , :version<1.0>, :stand-alone<yes>);
+$writer.startDocument( :enc<UTF-8> , :version<1.0>, :standalone);
 
 $writer.flush;
 is $writer.Str.chomp, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
