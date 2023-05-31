@@ -25,7 +25,82 @@ say $writer.Str;
 # <Test id="abc123">Hello world!</Test>
 ```
 
-Methods
+Description
+------
 
-### startDocument
+This module binds to the libxml2 Writer interface. It can be used to construct full XML
+documents or XML fragments.
+
+It offers:
+- an alternative to the W3C DOM for constructing XML documents
+- the ability to stream to files, buffers or strings without the need to create an intermediate XML document
+
+Classes
+----
+
+This module has several output classes:
+
+- `LibXML::Writer::Buffer` - for output to a string or buffer.
+- `LibXML::Writer::Document` - for construction of a LibXML Document
+- `LibXML::Writer::PushParser` - for construction of a LibXML Document via `LibXML::PushParser`
+- `LibXML::Writer::File` - for direct output to a file
+
+
+Methods
+----
+
+### Documents
+
+#### startDocument
+#### endDocument
+
+### Elements
+
+#### startElement
+#### endElement
+#### writeElement
+
+### Attributes
+
+#### startAttribute
+#### endAttribute
+#### writeAttribute
+
+### Content
+
+#### writeText
+#### writeCDATA
+#### writePI
+#### writeComment
+#### writeRaw
+
+### Name-Spaces
+
+#### startElementNS
+#### writeElementNS
+#### writeAttributeNS
+
+### DTD'S
+
+#### writeDTD
+#### startDTD
+#### endDTD
+#### startDTDElement
+#### endDTDElement
+#### writeDTDElement
+#### writeDTDAttList
+#### startDTDEntity
+#### endDTDEntity
+#### writeDTDInternalEntity
+#### writeDTDExternalEntity
+#### writeDTDNotation
+
+### AST
+
+#### write
+
+### Not yet implemented
+
+
+
 
