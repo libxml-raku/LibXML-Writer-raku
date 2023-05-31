@@ -11,4 +11,3 @@ submethod TWEAK is hidden-from-backtrace {
     self.raw .= new(:$!file)
         // die X::LibXML::OpFail.new(:what<Write>, :op<NewFile>);
 }
-

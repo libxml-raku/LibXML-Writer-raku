@@ -14,7 +14,6 @@ subtest 'buffer writer sanity', {
     $writer.startElement('Foo');
     $writer.endElement;
     $writer.endDocument;
-    $writer.flush;
     is $writer.Str.lines.join, '<?xml version="1.0" encoding="UTF-8"?><Foo/>';
 }
 

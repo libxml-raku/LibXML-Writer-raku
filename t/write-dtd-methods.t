@@ -12,7 +12,6 @@ unless LibXML::Writer.have-writer {
 sub tail($writer, &m?) {
     $writer.writeText: "\n";
     .($writer) with &m;
-    $writer.flush;
     $writer.Str.lines.tail;
 }
 

@@ -7,7 +7,7 @@ use LibXML::Raw;
 
 has xmlBuffer32 $!buf handles <Blob> .= new;
 
-method Str { $.Blob.decode: $.enc }
+method Str { $.flush; $.Blob.decode: $.enc }
 
 submethod TWEAK is hidden-from-backtrace {
     self.raw .= new(:$!buf)

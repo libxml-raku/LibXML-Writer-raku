@@ -25,6 +25,6 @@ multi method TWEAK(LibXML::Document:D :$!doc!) is hidden-from-backtrace {
         // die X::LibXML::OpFail.new(:what<Write>, :op<NewMem>);
 }
 
-method Str { .Str with $!doc // $!node }
+method Str { $.flush; .Str with $!doc // $!node }
 
 

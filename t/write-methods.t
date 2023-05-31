@@ -12,7 +12,6 @@ unless LibXML::Writer.have-writer {
 sub tail($writer, &m?) {
     $writer.writeText: "\n";
     .($writer) with &m;
-    $writer.flush;
     $writer.Str.lines.tail;
 }
 
@@ -20,7 +19,6 @@ my LibXML::Writer::Buffer:D $writer .= new;
 ok $writer.raw.defined;
 $writer.startDocument( :enc<UTF-8> , :version<1.0>, :standalone);
 
-$writer.flush;
 is $writer.Str.chomp, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
 
 $writer.startElement('Test');

@@ -18,7 +18,6 @@ subtest 'constructed root', {
     $writer.startElement('Foo');
     $writer.endElement;
     $writer.endDocument;
-    $writer.flush;
     is $writer.doc.root.Str, '<Foo/>';
 }
 
