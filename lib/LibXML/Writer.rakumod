@@ -62,8 +62,11 @@ method writeElementNS(NCName $local-name, Str $content = '', Str :$prefix, Str :
 method writeAttribute(QName $name, Str $content) { self!write('writeAttribute', $name, $content)}
 method writeAttributeNS(NCName $local-name, Str $content, Str :$prefix, Str :$uri) { self!write('writeAttributeNS', $prefix, $local-name, $uri, $content)}
 
+multi method writeComment(Str:D $content where .contains('<!--')) {
+    $.writeComment: $content.split(/'<!--'/).join('< !--');
+}
 multi method writeComment(Str:D $content where .contains('-->')) {
-    $content.split(/'-->'/).map({ $.writeComment($_) }).join;
+    $.writeComment: $content.split(/'-->'/).join('-- >');
 }
 multi method writeComment(Str:D $content) { self!write('writeComment', $content)}
 

@@ -58,7 +58,7 @@ subtest 'writeElementNS', {
 
 subtest 'text and comments', {
 
-    is $writer.&tail({ .writeComment('Yy-->yy') }), '<!--Yy--><!--yy-->';
+    is $writer.&tail({ .writeComment('Yy-->yy') }), '<!--Yy-- >yy-->';
 
     is $writer.&tail({ .writeText('A&B') }), 'A&amp;B';
     is $writer.&tail({ .writeRaw('A&amp;B') }), 'A&amp;B';
