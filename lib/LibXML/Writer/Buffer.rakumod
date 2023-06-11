@@ -14,3 +14,17 @@ submethod TWEAK is hidden-from-backtrace {
     self.raw .= new(:$!buf)
         // die X::LibXML::OpFail.new(:what<Write>, :op<NewMem>);
 }
+
+=begin pod
+
+=head2 Synopsis
+
+=begin code :lang<raku>
+use LibXML::Writer::Buffer;
+my LibXML::Writer::Buffer:D $writer .= new;
+$writer.write: 'elem' => ['text'];
+say $writer.Str;  # <elem>text</elem>
+say $writer.Blob; # Buf[uint8]:0x<3C 65 6C ...>
+=end code
+
+=end pod

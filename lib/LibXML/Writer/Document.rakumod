@@ -27,4 +27,19 @@ multi method TWEAK(LibXML::Document:D :$!doc!) is hidden-from-backtrace {
 
 method doc handles<Str Blob> { $.flush; $!doc }
 
+=begin pod
 
+=head2 Synopsis
+
+=begin code :lang<raku>
+use LibXML::Document;
+use LibXML::Writer::Document;
+my LibXML::Document $doc .= new;
+my LibXML::Writer::Document:D $writer .= new: :$doc;
+$writer.write: '#xml' => ['elem' => ['text']];
+say $writer.doc.Str;
+# <?xml version="1.0" encoding="UTF-8"?>
+# <elem>text</elem>
+=end code
+
+=end pod
