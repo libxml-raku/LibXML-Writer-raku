@@ -11,7 +11,7 @@ use LibXML::Raw::TextWriter;
 has LibXML::Document $.doc is built;
 has LibXML::Node     $.node is built;
 
-multi method TWEAK(LibXML::Node:D :$!node!, LibXML::Document :$!doc = $!node.doc) is hidden-from-backtrace {
+multi method TWEAK(LibXML::Node:D :$!node!, LibXML::Document:D :$!doc = $!node.doc) is hidden-from-backtrace {
     my xmlDoc  $doc  = .raw with $!doc;
     my xmlNode $node = .raw with $!node;
     self.raw = xmlTextWriter.new(:$doc, :$node)
@@ -25,6 +25,6 @@ multi method TWEAK(LibXML::Document:D :$!doc!) is hidden-from-backtrace {
         // die X::LibXML::OpFail.new(:what<Write>, :op<NewMem>);
 }
 
-method Str { $.flush; .Str with $!doc // $!node }
+method doc handles<Str Blob> { $.flush; $!doc }
 
 

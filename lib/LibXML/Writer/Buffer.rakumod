@@ -5,9 +5,10 @@ also is LibXML::Writer;
 
 use LibXML::Raw;
 
-has xmlBuffer32 $!buf handles <Blob> .= new;
+has xmlBuffer32 $!buf .= new;
 
-method Str { $.flush; $.Blob.decode: $.enc }
+method Blob { $.flush; $!buf.Blob }
+method Str  { $.Blob.decode: $.enc }
 
 submethod TWEAK is hidden-from-backtrace {
     self.raw .= new(:$!buf)
