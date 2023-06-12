@@ -1,7 +1,7 @@
 [[Raku LibXML Project]](https://libxml-raku.github.io)
  / [[LibXML-Writer Module]](https://libxml-raku.github.io/LibXML-Writer-raku)
- / [Writer::Writer](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/Writer)
- :: [Document](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/Writer/Document)
+ / [Writer](https://libxml-raku.github.io/LibXML-Writer-raku/Writer)
+ :: [Document](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/Document)
 
 Synopsis
 --------
