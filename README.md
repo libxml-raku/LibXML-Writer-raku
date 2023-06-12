@@ -35,82 +35,20 @@ It offers:
 - an alternative to the W3C DOM for constructing XML documents
 - the ability to stream to files, buffers or strings without the need to create an intermediate XML document
 
+The API is documented in [LibXML::Writer](https://libxml-raku.github.io/LibXML-Writer-raku/Writer)
+
 Classes
 ----
 
 This module has several output classes:
 
-### `LibXML::Writer::Buffer` 
+  * [LibXML::Writer::Buffer](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/Buffer) - String or buffer output
 
-For output to a string or buffer.
+  * [LibXML::Writer::Document](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/Document) - Construction of LibXML Documents or Fragments
 
-### `LibXML::Writer::Document`
+  * [LibXML::Writer::PushParser](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/PushParser) - Construction of LibXML documents via LibXML::PushParser
 
-For construction of LibXML Documents
-
-### `LibXML::Writer::PushParser`
-
-For construction of LibXML Documents via `LibXML::PushParser`
-
-### `LibXML::Writer::File`
-
-For output directly to a file
-
-
-Methods
-----
-
-### Documents
-
-#### startDocument
-#### endDocument
-
-### Elements
-
-#### startElement
-#### endElement
-#### writeElement
-
-### Attributes
-
-#### startAttribute
-#### endAttribute
-#### writeAttribute
-
-### Content
-
-#### writeText
-#### writeCDATA
-#### writePI
-#### writeComment
-#### writeRaw
-
-### Name-Spaces
-
-#### startElementNS
-#### writeElementNS
-#### writeAttributeNS
-
-### DTD'S
-
-#### writeDTD
-#### startDTD
-#### endDTD
-#### startDTDElement
-#### endDTDElement
-#### writeDTDElement
-#### writeDTDAttList
-#### startDTDEntity
-#### endDTDEntity
-#### writeDTDInternalEntity
-#### writeDTDExternalEntity
-#### writeDTDNotation
-
-### AST
-
-#### write
-
-### Not yet implemented
+  * [LibXML::Writer::File](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/File) - Direct file output
 
 
 

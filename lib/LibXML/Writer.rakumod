@@ -175,3 +175,61 @@ submethod DESTROY {
     self.close;
 }
 
+=begin pod
+
+=head2 Methods
+
+=head3 Document Methods
+
+=head4 startDocument
+=head4 endDocument
+
+=head3 Element Methods
+
+=head4 startElement
+=head4 endElement
+=head4 writeElement
+
+=head3 Attribute Methods
+
+=head4 startAttribute
+=head4 endAttribute
+=head4 writeAttribute
+
+=head3 Content Methods
+
+=head4 writeText
+=head4 writeCDATA
+=head4 writePI
+=head4 writeComment
+=head4 writeRaw
+
+=head3 Name-Space Methods
+
+=head4 startElementNS
+=head4 writeElementNS
+=head4 writeAttributeNS
+
+=head3 DTD'S
+
+=head4 writeDTD
+=head4 startDTD
+=head4 endDTD
+=head4 startDTDElement
+=head4 endDTDElement
+=head4 writeDTDElement
+=head4 writeDTDAttList
+=head4 startDTDEntity
+=head4 endDTDEntity
+=head4 writeDTDInternalEntity
+=head4 writeDTDExternalEntity
+=head4 writeDTDNotation
+
+=head3 AST Methods
+
+=head4 write
+
+
+=head3 Not yet implemented Methods
+
+=end pod

@@ -1,7 +1,7 @@
 [[Raku LibXML Project]](https://libxml-raku.github.io)
- / [[LibXML Module]](https://libxml-raku.github.io/LibXML-raku)
- / [Writer](https://libxml-raku.github.io/LibXML-raku/Writer)
- :: [Buffer](https://libxml-raku.github.io/LibXML-raku/Writer/Buffer)
+ / [[LibXML-Writer Module]](https://libxml-raku.github.io/LibXML-Writer-raku)
+ / [Writer::Writer](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/Writer)
+ :: [Buffer](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/Writer/Buffer)
 
 Synopsis
 --------

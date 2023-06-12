@@ -25,7 +25,7 @@ realclean : clean
 Pod-To-Markdown-installed :
 	@raku -M Pod::To::Markdown -c
 
-doc : Pod-To-Markdown-installed docs/index.md docs/LibXML/Writer.md docs/LibXML/Writer/Buffer.md docs/LibXML/Writer/Document.md docs/LibXML/Writer/File.md docs/LibXML/Writer/PushParser.md
+doc : Pod-To-Markdown-installed docs/index.md docs/Writer.md docs/Writer/Buffer.md docs/Writer/Document.md docs/Writer/File.md docs/Writer/PushParser.md
 
 docs/index.md : README.md
 	(\
@@ -34,8 +34,8 @@ docs/index.md : README.md
             cat $< \
         ) > $@
 
-docs/LibXML/%.md : lib/LibXML/%.rakumod
+docs/%.md : lib/LibXML/%.rakumod
 	@raku -I . -c $<
 	raku -I . --doc=Markdown $< \
-	| TRAIL=LibXML/$* raku -p -n $(DocLinker) \
+	| TRAIL=LibXML/Writer/$* raku -p -n $(DocLinker) \
         > $@
