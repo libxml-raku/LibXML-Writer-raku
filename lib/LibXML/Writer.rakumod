@@ -22,8 +22,10 @@ use NativeCall;
 has xmlTextWriter $.raw is rw is built;
 has Str $.enc = 'UTF-8';
 
+=head2 Methods
+
 #| Ensure libxml2 has been compiled with the text-writer enabled
-method have-writer {
+method have-writer returns Bool {
     ? xml6_config_have_libxml_writer();
 }
 
@@ -34,31 +36,49 @@ method !write(Str:D $op, |c) is hidden-from-backtrace {
     $rv;
 }
 
-multi trait_mod:<is>(
-    Method $m where {.yada && .count <= 1},
+multi sub trait_mod:<is>(
+    Method $m where .yada,
     :$writer-raw!) {
-    my $name := $m.name;
-    $m.wrap(method (|c) is hidden-from-backtrace { self!write($name, |c) })
+    $m.wrap(method (|c) is hidden-from-backtrace { self!write($m.name, |c) })
 }
 
-method setIndent(Bool:D() $indent = True) {  self!write('setIndent', $indent); }
+=head3 Indentation
+
+#| enable or disable indentation
+method setIndented(Bool:D() $indented = True) {  self!write('setIndent', $indented); }
 method setIndentString(Str:D $indent)  {  self!write('setIndentString', $indent); }
 method setQuoteChar(Str:D $quote) { self!write('setQuoteChar', $quote.ord); }
 
 ## traits not working
 ## method startElement(QName $name) is writer-raw {...}
 
+=head3 Document Methods
+
+#| Starts the document and writes the XML declaration
 method startDocument(Str :$version, Str:D :$!enc = 'UTF-8', Bool :$standalone) {
     my Str $standalone-yn = $_ ?? 'yes' !! 'no'
         with $standalone;
     self!write('startDocument', $version, $!enc, $standalone-yn);
 }
+
+#| Closes any open elements or attributes and finishes the document
 method endDocument { self!write('endDocument')}
 
+=head3 Element Methods
+
+#| Writes the specified start tag
 method startElement(QName $name) { self!write('startElement', $name)}
+
+#| Writes the specified start tag and associates it with the given namespace and prefix
 method startElementNS(NCName $local-name, Str :$prefix, Str :$uri) { self!write('startElementNS', $prefix, $local-name, $uri)}
+
+#| Closes the current element
 method endElement { self!write('endElement')}
+
+#| Writes a single element; Either empty or with the given content
 method writeElement(QName $name, Str $content?) { self!write('writeElement', $name, $content)}
+
+#| Writes a single element and associates it with the given namespace and prefix
 method writeElementNS(NCName $local-name, Str $content = '', Str :$prefix, Str :$uri) { self!write('writeElementNS', $prefix, $local-name, $uri, $content)}
 
 method writeAttribute(QName $name, Str $content) { self!write('writeAttribute', $name, $content)}
@@ -176,19 +196,6 @@ submethod DESTROY {
 }
 
 =begin pod
-
-=head2 Methods
-
-=head3 Document Methods
-
-=head4 startDocument
-=head4 endDocument
-
-=head3 Element Methods
-
-=head4 startElement
-=head4 endElement
-=head4 writeElement
 
 =head3 Attribute Methods
 

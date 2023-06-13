@@ -38,10 +38,11 @@ subtest 'writeAttribute', {
 }
 
 subtest 'setIndent', {
-    is $writer.&tail({ .setIndent; .writeElement('Yyy') }), ' <Yyy/>';
+    is $writer.&tail({ .setIndented; .writeElement('Yyy') }), ' <Yyy/>';
     is $writer.&tail({ .setIndentString("   "); .writeElement('Zzz') }), '   <Zzz/>';
     is $writer.&tail({ .setIndentString("<!--X-->"); .writeElement('Zzz') }), '<!--X--><Zzz/>';
     $writer.setIndent(False);
+    is $writer.&tail({ .writeElement('Zzz') }), '<Zzz/>';
 }
 
 subtest 'writeElementNS', {
