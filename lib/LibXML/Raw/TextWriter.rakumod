@@ -39,6 +39,7 @@ class xmlTextWriter is repr(Opaque) is export {
     method writeString(xmlCharP $content --> int32) is symbol('xmlTextWriterWriteString') is native($XML2) {*}
     method writeCDATA(xmlCharP $content --> int32) is symbol('xmlTextWriterWriteCDATA') is native($XML2) {*}
     method writeRaw(xmlCharP $content --> int32) is symbol('xmlTextWriterWriteRaw') is native($XML2) {*}
+    method writeRawLen(blob8 $content, int32 --> int32) is symbol('xmlTextWriterWriteRawLen') is native($XML2) {*}
     method writePI(xmlCharP $name, xmlCharP $content --> int32) is symbol('xmlTextWriterWritePI') is native($XML2) {*}
 
     method writeDTD(xmlCharP $name, xmlCharP $pubid, xmlCharP $sysid, xmlCharP $subset --> int32) is symbol('xmlTextWriterWriteDTD') is native($XML2) {*}

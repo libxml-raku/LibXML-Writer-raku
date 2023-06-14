@@ -30,7 +30,27 @@ method setIndented(
 ) returns Mu
 ```
 
-enable or disable indentation
+Enable or disable indentation
+
+### method setIndentString
+
+```raku
+method setIndentString(
+    Str:D $indent
+) returns Mu
+```
+
+Set indentation text
+
+### method setQuoteChar
+
+```raku
+method setQuoteChar(
+    Str:D $quote
+) returns Mu
+```
+
+Set character for quoting attributes
 
 ### Document Methods
 
@@ -108,7 +128,101 @@ method writeElementNS(
 ) returns Mu
 ```
 
-Writes a single element and associates it with the given namespace and prefix
+Writes a single element with an associated namespace and prefix
+
+### method writeAttribute
+
+```raku
+method writeAttribute(
+    Str $name where { ... },
+    Str $content
+) returns Mu
+```
+
+Writes an XML attribute
+
+### method writeAttributeNS
+
+```raku
+method writeAttributeNS(
+    Str $local-name where { ... },
+    Str $content,
+    Str :$prefix,
+    Str :$uri
+) returns Mu
+```
+
+Writes an XML attributet with an associated namespace and prefix
+
+### method writeComment
+
+```raku
+method writeComment(
+    Str:D $content
+) returns Mu
+```
+
+Writes an XML comment
+
+### method writeText
+
+```raku
+method writeText(
+    Str:D $content
+) returns UInt
+```
+
+Writes text content with escaping and encoding
+
+```raku
+$bytes-written = $writer.writeText: 'A&B'; # output: A&amp;B
+```
+
+### method writeCDATA
+
+```raku
+method writeCDATA(
+    Str:D $content
+) returns UInt
+```
+
+Writes CDATA formatted text content
+
+```raku
+$bytes-written = $writer.writeCDATA: 'A&B'; # output: <![CDATA[A&B]]>
+```
+
+### multi method writeRaw
+
+```raku
+multi method writeRaw(
+    Str:D $content
+) returns Mu
+```
+
+Writes an encoded string
+
+### multi method writeRaw
+
+```raku
+multi method writeRaw(
+    Blob[uint8]:D $content,
+    Int $len where { ... } = Code.new
+) returns Mu
+```
+
+Writes a preencoded buffer directly
+
+### method writePI
+
+```raku
+method writePI(
+    Str $name where { ... },
+    Str $content
+) returns Mu
+```
+
+Wries an XML Processing Instruction
 
 ### Attribute Methods
 

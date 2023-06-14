@@ -41,7 +41,7 @@ subtest 'setIndent', {
     is $writer.&tail({ .setIndented; .writeElement('Yyy') }), ' <Yyy/>';
     is $writer.&tail({ .setIndentString("   "); .writeElement('Zzz') }), '   <Zzz/>';
     is $writer.&tail({ .setIndentString("<!--X-->"); .writeElement('Zzz') }), '<!--X--><Zzz/>';
-    $writer.setIndent(False);
+    $writer.setIndented(False);
     is $writer.&tail({ .writeElement('Zzz') }), '<Zzz/>';
 }
 
@@ -61,6 +61,8 @@ subtest 'text and comments', {
 
     is $writer.&tail({ .writeText('A&B') }), 'A&amp;B';
     is $writer.&tail({ .writeRaw('A&amp;B') }), 'A&amp;B';
+    is $writer.&tail({ .writeRaw('A&amp;B'.encode) }), 'A&amp;B';
+    is $writer.&tail({ .writeRaw('A&amp;B'.encode, 6) }), 'A&amp;';
     is $writer.&tail({ .writeCDATA('A&B') }), '<![CDATA[A&B]]>';
     is $writer.&tail({ .writeCDATA('A&B]]>') }), '<![CDATA[A&B]]]><![CDATA[]>]]>';
 

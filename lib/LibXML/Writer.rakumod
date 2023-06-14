@@ -44,9 +44,11 @@ multi sub trait_mod:<is>(
 
 =head3 Indentation
 
-#| enable or disable indentation
+#| Enable or disable indentation
 method setIndented(Bool:D() $indented = True) {  self!write('setIndent', $indented); }
+#| Set indentation text
 method setIndentString(Str:D $indent)  {  self!write('setIndentString', $indent); }
+#| Set character for quoting attributes
 method setQuoteChar(Str:D $quote) { self!write('setQuoteChar', $quote.ord); }
 
 ## traits not working
@@ -78,12 +80,17 @@ method endElement { self!write('endElement')}
 #| Writes a single element; Either empty or with the given content
 method writeElement(QName $name, Str $content?) { self!write('writeElement', $name, $content)}
 
-#| Writes a single element and associates it with the given namespace and prefix
+#| Writes a single element with an associated namespace and prefix
 method writeElementNS(NCName $local-name, Str $content = '', Str :$prefix, Str :$uri) { self!write('writeElementNS', $prefix, $local-name, $uri, $content)}
 
+#| Writes an XML attribute
 method writeAttribute(QName $name, Str $content) { self!write('writeAttribute', $name, $content)}
+
+#| Writes an XML attributet with an associated namespace and prefix
 method writeAttributeNS(NCName $local-name, Str $content, Str :$prefix, Str :$uri) { self!write('writeAttributeNS', $prefix, $local-name, $uri, $content)}
 
+#| Writes an XML comment
+proto method writeComment(Str:D $content) {*}
 multi method writeComment(Str:D $content where .contains('<!--')) {
     $.writeComment: $content.split(/'<!--'/).join('< !--');
 }
@@ -92,14 +99,29 @@ multi method writeComment(Str:D $content where .contains('-->')) {
 }
 multi method writeComment(Str:D $content) { self!write('writeComment', $content)}
 
-method writeText(Str:D $content) { self!write('writeString', $content)}
+#| Writes text content with escaping and encoding
+method writeText(Str:D $content) returns UInt { self!write('writeString', $content)}
+=begin code :lang<raku>
+$bytes-written = $writer.writeText: 'A&B'; # output: A&amp;B
+=end code
+
+#| Writes CDATA formatted text content
+proto method writeCDATA(Str:D $content) returns UInt {*}
+=begin code :lang<raku>
+$bytes-written = $writer.writeCDATA: 'A&B'; # output: <![CDATA[A&B]]>
+=end code
+
 multi method writeCDATA(Str:D $content where .contains(']]>')) {
-    $content.split(/<?after ']'><?before ']>'>/).map({ $.writeCDATA($_) }).join;
+    $content.split(/<?after ']'><?before ']>'>/).map({ $.writeCDATA($_) }).sum;
 }
 multi method writeCDATA(Str:D $content) { self!write('writeCDATA', $content)}
 
-method writeRaw(Str:D $content) { self!write('writeRaw', $content)}
+#| Writes an encoded string
+multi method writeRaw(Str:D $content) { $.writeRaw: $content.encode($!enc) }
+#| Writes a preencoded buffer directly
+multi method writeRaw(blob8:D $content, UInt $len = $content.bytes) { self!write('writeRawLen', $content, $len)}
 
+#| Wries an XML Processing Instruction
 method writePI(QName $name, Str $content) { self!write('writePI', $name, $content)}
 
 method writeDTD(NCName $name, Str :$public-id, Str :$system-id, Str :$subset) { self!write('writeDTD', $name, $public-id, $system-id, $subset)}
