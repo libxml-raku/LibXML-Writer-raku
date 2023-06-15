@@ -96,7 +96,7 @@ method startElementNS(
 ) returns Mu
 ```
 
-Writes the specified start tag and associates it with the given namespace and prefix
+Writes the specified start tag and associates it with the given name-space and prefix
 
 ### method endElement
 
@@ -105,30 +105,6 @@ method endElement() returns Mu
 ```
 
 Closes the current element
-
-### method writeElement
-
-```raku
-method writeElement(
-    Str $name where { ... },
-    Str $content?
-) returns Mu
-```
-
-Writes a single element; Either empty or with the given content
-
-### method writeElementNS
-
-```raku
-method writeElementNS(
-    Str $local-name where { ... },
-    Str $content = "",
-    Str :$prefix,
-    Str :$uri
-) returns Mu
-```
-
-Writes a single element with an associated namespace and prefix
 
 ### method writeAttribute
 
@@ -139,7 +115,7 @@ method writeAttribute(
 ) returns Mu
 ```
 
-Writes an XML attribute
+Writes an XML attribute, within an element
 
 ### method writeAttributeNS
 
@@ -152,7 +128,31 @@ method writeAttributeNS(
 ) returns Mu
 ```
 
-Writes an XML attributet with an associated namespace and prefix
+Writes an XML attribute with an associated name-space and prefix, within an element
+
+### method writeElement
+
+```raku
+method writeElement(
+    Str $name where { ... },
+    Str $content?
+) returns Mu
+```
+
+Writes an atomic element; Either empty or with the given content
+
+### method writeElementNS
+
+```raku
+method writeElementNS(
+    Str $local-name where { ... },
+    Str $content = "",
+    Str :$prefix,
+    Str :$uri
+) returns Mu
+```
+
+Writes an atomic element with an associated name-space and prefix
 
 ### method writeComment
 
@@ -200,7 +200,7 @@ multi method writeRaw(
 ) returns Mu
 ```
 
-Writes an encoded string
+Writes a string, with encoding
 
 ### multi method writeRaw
 
@@ -211,7 +211,7 @@ multi method writeRaw(
 ) returns Mu
 ```
 
-Writes a preencoded buffer directly
+Writes a pre-encoded buffer directly
 
 ### method writePI
 
@@ -222,63 +222,167 @@ method writePI(
 ) returns Mu
 ```
 
-Wries an XML Processing Instruction
+Writes an XML Processing Instruction
 
-### Attribute Methods
+### DTD Methods
 
-#### startAttribute
+### method writeDTD
 
-#### endAttribute
+```raku
+method writeDTD(
+    Str $name where { ... },
+    Str :$public-id,
+    Str :$system-id,
+    Str :$subset
+) returns Mu
+```
 
-#### writeAttribute
+Writes an atomic XML DOCTYPE Definition (DTD)
 
-### Content Methods
+### method startDTD
 
-#### writeText
+```raku
+method startDTD(
+    Str $name where { ... },
+    Str :$public-id,
+    Str :$system-id
+) returns Mu
+```
 
-#### writeCDATA
+Starts an XML DOCTYPE Definition (DTD)
 
-#### writePI
+The methods below can then be used to add definitions for DTD Elements, Attribute Lists, Entities and Notations, before calling `endDTD`.
 
-#### writeComment
+### method endDTD
 
-#### writeRaw
+```raku
+method endDTD() returns Mu
+```
 
-### Name-Space Methods
+Ends an XML DOCTYPE Definition (DTD)
 
-#### startElementNS
+### method startDTDElement
 
-#### writeElementNS
+```raku
+method startDTDElement(
+    Str $name where { ... }
+) returns Mu
+```
 
-#### writeAttributeNS
+Starts an Element definition with an XML DTD
 
-### DTD'S
+### method endDTDElement
 
-#### writeDTD
+```raku
+method endDTDElement() returns Mu
+```
 
-#### startDTD
+Ends an XML DTD element definition
 
-#### endDTD
+### method writeDTDElement
 
-#### startDTDElement
+```raku
+method writeDTDElement(
+    Str $name where { ... },
+    Str:D $content = "(EMPTY*)"
+) returns Mu
+```
 
-#### endDTDElement
+Writes an Element declaration within an XML DTD
 
-#### writeDTDElement
+### method writeDTDAttlist
 
-#### writeDTDAttList
+```raku
+method writeDTDAttlist(
+    Str $name where { ... },
+    Str $content
+) returns Mu
+```
 
-#### startDTDEntity
+Writes an Attribute List declaration within an XML DTD
 
-#### endDTDEntity
+### method startDTDEntity
 
-#### writeDTDInternalEntity
+```raku
+method startDTDEntity(
+    Str $name where { ... },
+    Int :$pe
+) returns Mu
+```
 
-#### writeDTDExternalEntity
+Starts an entity definition within an XML DTD
 
-#### writeDTDNotation
+### method endDTDEntity
 
-### AST Methods
+```raku
+method endDTDEntity() returns Mu
+```
+
+Ends an XML DTD Entity definition
+
+### method writeDTDInternalEntity
+
+```raku
+method writeDTDInternalEntity(
+    Str $name where { ... },
+    Str:D $content,
+    Int :$pe
+) returns Mu
+```
+
+Writes an Internal Entity definition within an XML DTD
+
+### method writeDTDExternalEntity
+
+```raku
+method writeDTDExternalEntity(
+    Str $name where { ... },
+    Str :$public-id,
+    Str :$system-id,
+    Str :$ndata,
+    Int :$pe
+) returns Mu
+```
+
+Writes an external entity definition within an XML DTD
+
+### method writeDTDNotation
+
+```raku
+method writeDTDNotation(
+    Str $name where { ... },
+    Str :$public-id,
+    Str :$system-id
+) returns Mu
+```
+
+Writes a notation definition within an XML DTD
+
+### method write
+
+```raku
+method write(
+    $ast
+) returns Mu
+```
+
+Write an AST struct
+
+### method flush
+
+```raku
+method flush() returns Mu
+```
+
+Flush an buffered XML
+
+### method close
+
+```raku
+method close() returns Mu
+```
+
+Finish writing XML
 
 #### write
 
