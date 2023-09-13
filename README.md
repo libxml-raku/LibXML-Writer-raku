@@ -46,6 +46,8 @@ This module has several output classes:
 
   * [LibXML::Writer::Document](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/Document) - Construction of LibXML Documents or Fragments
 
+  * [LibXML::Writer::Node](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/Node) - Construction of Document Sub-trees or Fragments
+
   * [LibXML::Writer::PushParser](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/PushParser) - Construction of LibXML documents via LibXML::PushParser
 
   * [LibXML::Writer::File](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/File) - Direct file output

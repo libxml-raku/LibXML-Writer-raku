@@ -13,6 +13,7 @@
     "LibXML::Raw::TextWriter": "lib/LibXML/Raw/TextWriter.rakumod",
     "LibXML::Writer": "lib/LibXML/Writer.rakumod",
     "LibXML::Writer::Buffer": "lib/LibXML/Writer/Buffer.rakumod",
+    "LibXML::Writer::Node": "lib/LibXML/Writer/Node.rakumod",
     "LibXML::Writer::Document": "lib/LibXML/Writer/Document.rakumod",
     "LibXML::Writer::File": "lib/LibXML/Writer/File.rakumod",
     "LibXML::Writer::PushParser": "lib/LibXML/Writer/PushParser.rakumod"

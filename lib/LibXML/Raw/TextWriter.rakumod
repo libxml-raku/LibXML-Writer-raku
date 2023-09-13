@@ -20,7 +20,7 @@ class xmlTextWriter is repr(Opaque) is export {
     method Free is symbol('xmlFreeTextWriter') is native($XML2) {*}
 
     method setQuoteChar(int8 $char --> int32) is symbol('xmlTextWriterSetQuoteChar') is native($XML2) {*}
-    method setIndent(int32 $indent --> int32) is symbol('xmlTextWriterSetIndent') is native($XML2) {*}
+    method setIndented(int32 $indent --> int32) is symbol('xmlTextWriterSetIndent') is native($XML2) {*}
     method setIndentString(xmlCharP $indent --> int32) is symbol('xmlTextWriterSetIndentString') is native($XML2) {*}
     method startDocument(xmlCharP $version, xmlCharP $name, xmlCharP $stand-alone --> int32) is symbol('xmlTextWriterStartDocument') is native($XML2) {*}
     method endDocument(--> int32) is symbol('xmlTextWriterEndDocument') is native($XML2) {*}
@@ -61,7 +61,11 @@ class xmlTextWriter is repr(Opaque) is export {
 
     method flush returns int32 is symbol('xmlTextWriterFlush') is native($XML2) {*}
 
-    multi method new(xmlDoc:D :$doc!, xmlNode :$node!, Int :$compress = 0) {
+    multi method new(xmlDoc:D :$doc!, xmlNode :$node, Int :$compress = 0) {
+        NewTree($doc, $node, $compress);
+    }
+
+    multi method new(xmlDoc :$doc, xmlNode:D :$node!, Int :$compress = 0) {
         NewTree($doc, $node, $compress);
     }
 

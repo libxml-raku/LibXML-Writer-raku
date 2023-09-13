@@ -45,7 +45,7 @@ multi sub trait_mod:<is>(
 =head3 Indentation
 
 #| Enable or disable indentation
-method setIndented(Bool:D() $indented = True) {  self!write('setIndent', $indented); }
+method setIndented(Bool:D() $indented = True) {  self!write('setIndented', $indented); }
 #| Set indentation text
 method setIndentString(Str:D $indent)  {  self!write('setIndentString', $indent); }
 #| Set character for quoting attributes
