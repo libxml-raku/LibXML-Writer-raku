@@ -4,12 +4,6 @@ unit class LibXML::Writer;
 use LibXML::_Configurable;
 also does LibXML::_Configurable;
 
-=begin pod
-
-use LibXML::Writer::Buffer; # write to a string
-
-=end pod
-
 use LibXML::Raw;
 use LibXML::Raw::TextWriter;
 use LibXML::Types :QName, :NCName;

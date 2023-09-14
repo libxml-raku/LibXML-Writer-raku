@@ -7,8 +7,6 @@ class LibXML::Writer
 
 Interface to libxml2 stream writer
 
-use LibXML::Writer::Buffer; # write to a string
-
 Methods
 -------
 

@@ -1,4 +1,7 @@
 {{$NEXT}}
 
+0.0.2  2023-09-15T06:55:38+12:00
+    - Restore README.md. Clobbered in initial release.
+
 0.0.1  2023-09-15T06:30:35+12:00
     - Initial release
