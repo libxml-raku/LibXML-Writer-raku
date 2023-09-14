@@ -1,3 +1,4 @@
+#| In-memory buffer construction
 unit class LibXML::Writer::Buffer;
 
 use LibXML::Writer;
@@ -26,5 +27,9 @@ $writer.write: 'elem' => ['text'];
 say $writer.Str;  # <elem>text</elem>
 say $writer.Blob; # Buf[uint8]:0x<3C 65 6C ...>
 =end code
+
+=head2 Description
+
+This output class writes to an in-memory buffer.
 
 =end pod

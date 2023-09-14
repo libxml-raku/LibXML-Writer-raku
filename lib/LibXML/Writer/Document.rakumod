@@ -1,3 +1,4 @@
+#| LibXML document construction
 unit class LibXML::Writer::Document;
 
 use LibXML::Writer;
@@ -31,5 +32,9 @@ say $writer.doc.Str;
 # <?xml version="1.0" encoding="UTF-8"?>
 # <elem>text</elem>
 =end code
+
+=head2 Description
+
+This output class allows a document to be constructed via L<LibXML::Writer>.
 
 =end pod

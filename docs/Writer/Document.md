@@ -3,6 +3,11 @@
  / [Writer](https://libxml-raku.github.io/LibXML-Writer-raku/Writer)
  :: [Document](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/Document)
 
+class LibXML::Writer::Document
+------------------------------
+
+LibXML document construction
+
 Synopsis
 --------
 
@@ -16,4 +21,9 @@ say $writer.doc.Str;
 # <?xml version="1.0" encoding="UTF-8"?>
 # <elem>text</elem>
 ```
+
+Description
+-----------
+
+This output class allows a document to be constructed via [LibXML::Writer](https://libxml-raku.github.io/LibXML-Writer-raku).
 

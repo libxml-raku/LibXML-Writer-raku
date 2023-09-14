@@ -382,9 +382,5 @@ Flush an buffered XML
 method close() returns Mu
 ```
 
-Finish writing XML
-
-#### write
-
-### Not yet implemented Methods
+Finish writing XML. Flush output and free the native XML Writer
 

@@ -229,7 +229,7 @@ multi method write(Str $value) { self.writeText: $value }
 #| Flush an buffered XML
 method flush { self!write('flush')}
 
-#| Finish writing XML 
+#| Finish writing XML. Flush output and free the native XML Writer
 method close {
     with $!raw {
         .flush;
@@ -242,12 +242,3 @@ submethod DESTROY {
     self.close;
 }
 
-=begin pod
-
-
-=head4 write
-
-
-=head3 Not yet implemented Methods
-
-=end pod

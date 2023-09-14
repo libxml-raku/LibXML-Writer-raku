@@ -34,7 +34,7 @@ subtest 'late root attachment', {
 subtest 'concurrent document writers', {
     my LibXML::Document $doc .= new;
     my atomicint $ok = 0;
-    my LibXML::Element @elems = (1..20).hyper(:batch(1)).map: {
+    my LibXML::Element @elems = (1..128).hyper(:batch(8)).map: {
         my LibXML::Element $node = $doc.createElement('Foo');
         my LibXML::Writer::Node $writer .= new: :$node, :$doc;
         $writer.startDocument();
@@ -43,9 +43,9 @@ subtest 'concurrent document writers', {
         $writer.endElement;
         $writer.endDocument;
         $ok⚛++ if $writer.node.Str eq "<Foo><Baz>This is Baz number {$_}</Baz></Foo>";
-        $node;
+        $writer.node;
     }
-    is $ok, 20, 'fragments ok';
+    is $ok, 128, 'fragments ok';
     lives-ok {
         my $root = $doc.createElement('Doc');
         $root.addChild($_) for @elems;

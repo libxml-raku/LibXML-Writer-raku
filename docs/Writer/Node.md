@@ -3,10 +3,10 @@
  / [Writer](https://libxml-raku.github.io/LibXML-Writer-raku/Writer)
  :: [Node](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/Node)
 
-Description
------------
+class LibXML::Writer::Node
+--------------------------
 
-This class is used to write sub-trees; stand-alone or within a containing document.
+LibXML document fragment/sub-tree construction
 
 Synopsis
 --------
@@ -16,17 +16,28 @@ use LibXML::Document;
 use LibXML::Element;
 use LibXML::Writer::Node;
 my LibXML::Document $doc .= new;
-    $doc.root = $doc.createElement('Foo');
-    my LibXML::Element $node = $doc.root.addChild:  $doc.createElement('Bar');
+# concurrent sub-tree construction
+my LibXML::Element @elems = (1.10).hyper.map: {
+    my LibXML::Element $node = $doc.createElement('Bar');
     my LibXML::Writer::Node $writer .= new: :$node;
 
     $writer.startDocument();
     $writer.startElement('Baz');
     $writer.endElement;
     $writer.endDocument;
+    $writer.node;
+}
+my $root = $doc.createElement('Foo');
+$root.addChild($_) for @elems;
+$doc.root = $root;
 say $writer.Str;
 say $doc.Str;
 # <?xml version="1.0" encoding="UTF-8"?>
-# <Foo><Bar><Baz/></Bar></Foo>
+# <Foo><Bar><Baz/></Bar>...</Foo>
 ```
+
+Description
+-----------
+
+This class is used to write sub-trees; stand-alone or within a containing document.
 
