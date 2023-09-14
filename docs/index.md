@@ -1,4 +1,5 @@
 [![Actions Status](https://github.com/libxml-raku/LibXML-Writer-raku/workflows/test/badge.svg)](https://github.com/libxml-raku/LibXML-Writer-raku/actions)
+[[Raku LibXML Project]](https://libxml-raku.github.io) / [[LibXML-Writer Module]](https://libxml-raku.github.io/LibXML-Writer-raku)
 
 LibXML-Writer-raku
 =======

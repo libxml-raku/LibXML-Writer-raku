@@ -30,6 +30,8 @@ doc : Pod-To-Markdown-installed docs/index.md docs/Writer.md docs/Writer/Buffer.
 docs/index.md : README.md
 	(\
 	    echo '[![Actions Status]($(REPO)/workflows/test/badge.svg)]($(REPO)/actions)'; \
+            echo -n '[[Raku LibXML Project]](https://libxml-raku.github.io)'; \
+            echo ' / [[LibXML-Writer Module]](https://libxml-raku.github.io/LibXML-Writer-raku)'; \
             echo '';\
             cat $< \
         ) > $@
