@@ -12,6 +12,7 @@ Synopsis
 --------
 
 ```raku
+use LibXML::Writer::File;
 use File::Temp;
 my (Str:D $file) = tempfile();
 my LibXML::Writer::File $writer .= new: :$file;

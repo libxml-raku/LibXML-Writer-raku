@@ -18,6 +18,7 @@ submethod TWEAK is hidden-from-backtrace {
 =head2 Synopsis
 
     =begin code :lang<raku>
+    use LibXML::Writer::File;
     use File::Temp;
     my (Str:D $file) = tempfile();
     my LibXML::Writer::File $writer .= new: :$file;
