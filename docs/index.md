@@ -46,7 +46,7 @@ This module has several output classes:
 
   * [LibXML::Writer::Buffer](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/Buffer) - String or buffer output
 
-  * [LibXML::Writer::Document](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/Document) - Construction of LibXML Documents or Fragments
+  * [LibXML::Writer::Document](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/Document) - Construction of LibXML Documents
 
   * [LibXML::Writer::Node](https://libxml-raku.github.io/LibXML-Writer-raku/Writer/Node) - Construction of Document Sub-trees or Fragments
 
