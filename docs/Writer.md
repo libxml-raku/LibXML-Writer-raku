@@ -364,7 +364,7 @@ method write(
 ) returns Mu
 ```
 
-Write an AST struct
+Writes an AST structure
 
 ### method flush
 
@@ -381,4 +381,21 @@ method close() returns Mu
 ```
 
 Finish writing XML. Flush output and free the native XML Writer
+
+### method serialize
+
+```raku
+method serialize(
+    |c
+) returns Str:D
+```
+
+XML::Writer compatibility
+
+For example:
+
+```raku
+say LibXML::Writer.serialize: "Test" => [:id<abc123>, 'Hello world!'];
+# <Test id="abc123">Hello world!</Test>
+```
 

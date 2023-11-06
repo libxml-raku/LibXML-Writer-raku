@@ -158,7 +158,7 @@ method writeDTDExternalEntity(NCName $name, Str :$public-id, Str :$system-id, St
 #| Writes a notation definition within an XML DTD
 method writeDTDNotation(NCName $name, Str :$public-id, Str :$system-id) { self!write('writeDTDNotation', $name, $public-id, $system-id)}
 
-#| Write an AST struct
+#| Writes an AST structure
 proto method write($ast) {*}
 
 multi method write(Pair $_) {
@@ -218,7 +218,7 @@ multi method write(Pair $_) {
 
 multi method write(Positional $value) { self.write: $_ for $value.list }
 
-multi method write(Str $value) { self.writeText: $value }
+multi method write(Str:D() $value) { self.writeText: $value }
 
 #| Flush an buffered XML
 method flush { self!write('flush')}
@@ -230,6 +230,24 @@ method close {
         .Free;
         $_ = Nil;
     }
+}
+
+#| XML::Writer compatibility
+proto method serialize(|c --> Str:D) {*}
+=para For example:
+=begin code :lang<raku>
+say LibXML::Writer.serialize: "Test" => [:id<abc123>, 'Hello world!'];
+# <Test id="abc123">Hello world!</Test>
+=end code
+
+multi method serialize(Pair $ast, *% where .elems == 0) {
+    my $writer = (require ::('LibXML::Writer::Buffer')).new;
+    $writer.write: $ast;
+    $writer.Str;
+}
+
+multi method serialize(*%named where .elems == 1) {
+    self.serialize: %named.pairs[0];
 }
 
 submethod DESTROY {
