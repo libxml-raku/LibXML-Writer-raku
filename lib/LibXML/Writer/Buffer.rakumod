@@ -16,6 +16,19 @@ submethod TWEAK is hidden-from-backtrace {
         // die X::LibXML::OpFail.new(:what<Write>, :op<NewMem>);
 }
 
+proto method serialize(|c --> Str:D) {*}
+
+multi method serialize(::?CLASS:U: |c) { self.new.serialize: |c }
+
+multi method serialize(::?CLASS:D: Pair $ast, *% where .elems == 0) {
+    self.write: $ast;
+    self.Str;
+}
+
+multi method serialize(::?CLASS:D: *%named where .elems == 1) {
+    self.serialize: %named.pairs[0];
+}
+
 =begin pod
 
 =head2 Synopsis

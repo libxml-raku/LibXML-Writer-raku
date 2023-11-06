@@ -233,22 +233,14 @@ method close {
 }
 
 #| XML::Writer compatibility
-proto method serialize(|c --> Str:D) {*}
+method serialize(|c --> Str:D) is hidden-from-backtrace {
+    (require ::('LibXML::Writer::Buffer')).serialize: |c;
+}
 =para For example:
 =begin code :lang<raku>
 say LibXML::Writer.serialize: "Test" => [:id<abc123>, 'Hello world!'];
 # <Test id="abc123">Hello world!</Test>
 =end code
-
-multi method serialize(Pair $ast, *% where .elems == 0) {
-    my $writer = (require ::('LibXML::Writer::Buffer')).new;
-    $writer.write: $ast;
-    $writer.Str;
-}
-
-multi method serialize(*%named where .elems == 1) {
-    self.serialize: %named.pairs[0];
-}
 
 submethod DESTROY {
     self.close;

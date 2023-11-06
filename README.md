@@ -34,6 +34,7 @@ documents or XML fragments.
 It offers:
 - an alternative to the W3C DOM for constructing XML documents
 - the ability to stream to files, buffers or strings without the need to create an intermediate XML document
+- fast concurrent construction of LibXML document fragments and sub-trees
 
 The API is documented in [LibXML::Writer](https://libxml-raku.github.io/LibXML-Writer-raku/Writer)
 
