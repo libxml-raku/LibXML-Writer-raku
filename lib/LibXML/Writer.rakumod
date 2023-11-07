@@ -232,16 +232,6 @@ method close {
     }
 }
 
-#| XML::Writer compatibility
-method serialize(|c --> Str:D) is hidden-from-backtrace {
-    (require ::('LibXML::Writer::Buffer')).serialize: |c;
-}
-=para For example:
-=begin code :lang<raku>
-say LibXML::Writer.serialize: "Test" => [:id<abc123>, 'Hello world!'];
-# <Test id="abc123">Hello world!</Test>
-=end code
-
 submethod DESTROY {
     self.close;
 }

@@ -12,15 +12,25 @@ Synopsis
 --------
 
 ```raku
-use LibXML::Writer::Buffer;
+use LibXML::Writer::Buffer; # String or buffer output
 my LibXML::Writer::Buffer:D $writer .= new;
-$writer.write: 'elem' => ['text'];
-say $writer.Str;  # <elem>text</elem>
-say $writer.Blob; # Buf[uint8]:0x<3C 65 6C ...>
+
+$writer.startElement('Test');
+$writer.writeAttribute('id', 'abc123');
+$writer.writeText('Hello world!');
+$writer.endElement();
+say $writer.Str;  # <Test id="abc123">Hello world!</Test>
+say $writer.Blob; # Buf[uint8]:0x<3C 54 65 ...>
+
+# XML::Writer compatibility
+say LibXML::Writer::Buffer.serialize: 'elem' => ['text'];
+# <elem>text</elem>
 ```
 
 Description
 -----------
 
-This output class writes to an in-memory buffer.
+This class writes to an in-memory buffer. The final XML document can then be rendered using the `Str` or `Blob` methods.
+
+A class-level `serialize method is also provided for compatibility with [XML::Writer](https://raku.land/github:masak/XML::Writer).
 
