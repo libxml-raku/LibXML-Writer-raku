@@ -33,17 +33,17 @@ method !write(Str:D $op, |c) is hidden-from-backtrace {
 multi sub trait_mod:<is>(
     Method $m where .yada,
     :$writer-raw!) {
-    $m.wrap(method (|c) is hidden-from-backtrace { self!write($m.name, |c) })
+    $m.wrap(method (|c) is hidden-from-backtrace returns UInt { self!write($m.name, |c) })
 }
 
 =head3 Indentation
 
 #| Enable or disable indentation
-method setIndented(Bool:D() $indented = True) {  self!write('setIndented', $indented); }
+method setIndented(Bool:D() $indented = True --> UInt) {  self!write('setIndented', $indented); }
 #| Set indentation text
-method setIndentString(Str:D $indent)  {  self!write('setIndentString', $indent); }
+method setIndentString(Str:D $indent --> UInt)  {  self!write('setIndentString', $indent); }
 #| Set character for quoting attributes
-method setQuoteChar(Str:D $quote) { self!write('setQuoteChar', $quote.ord); }
+method setQuoteChar(Str:D $quote --> UInt) { self!write('setQuoteChar', $quote.ord); }
 
 ## traits not working
 ## method startElement(QName $name) is writer-raw {...}
@@ -51,40 +51,40 @@ method setQuoteChar(Str:D $quote) { self!write('setQuoteChar', $quote.ord); }
 =head3 Document Methods
 
 #| Starts the document and writes the XML declaration
-method startDocument(Str :$version, Str:D :$!enc = 'UTF-8', Bool :$standalone) {
+method startDocument(Str :$version, Str:D :$!enc = 'UTF-8', Bool :$standalone --> UInt) {
     my Str $standalone-yn = $_ ?? 'yes' !! 'no'
         with $standalone;
     self!write('startDocument', $version, $!enc, $standalone-yn);
 }
 
 #| Closes any open elements or attributes and finishes the document
-method endDocument { self!write('endDocument')}
+method endDocument returns UInt { self!write('endDocument')}
 
 =head3 Element Methods
 
 #| Writes the specified start tag
-method startElement(QName $name) { self!write('startElement', $name)}
+method startElement(QName $name --> UInt) { self!write('startElement', $name)}
 
 #| Writes the specified start tag and associates it with the given name-space and prefix
-method startElementNS(NCName $local-name, Str :$prefix, Str :$uri) { self!write('startElementNS', $prefix, $local-name, $uri)}
+method startElementNS(NCName $local-name, Str :$prefix, Str :$uri --> UInt) { self!write('startElementNS', $prefix, $local-name, $uri)}
 
 #| Closes the current element
-method endElement { self!write('endElement')}
+method endElement returns UInt { self!write('endElement')}
 
 #| Writes an XML attribute, within an element
-method writeAttribute(QName $name, Str $content) { self!write('writeAttribute', $name, $content)}
+method writeAttribute(QName $name, Str $content --> UInt) { self!write('writeAttribute', $name, $content)}
 
 #| Writes an XML attribute with an associated name-space and prefix, within an element
-method writeAttributeNS(NCName $local-name, Str $content, Str :$prefix, Str :$uri) { self!write('writeAttributeNS', $prefix, $local-name, $uri, $content)}
+method writeAttributeNS(NCName $local-name, Str $content, Str :$prefix, Str :$uri --> UInt) { self!write('writeAttributeNS', $prefix, $local-name, $uri, $content)}
 
 #| Writes an atomic element; Either empty or with the given content
-method writeElement(QName $name, Str $content?) { self!write('writeElement', $name, $content)}
+method writeElement(QName $name, Str $content? --> UInt) { self!write('writeElement', $name, $content)}
 
 #| Writes an atomic element with an associated name-space and prefix
-method writeElementNS(NCName $local-name, Str $content = '', Str :$prefix, Str :$uri) { self!write('writeElementNS', $prefix, $local-name, $uri, $content)}
+method writeElementNS(NCName $local-name, Str $content = '', Str :$prefix, Str :$uri --> UInt) { self!write('writeElementNS', $prefix, $local-name, $uri, $content)}
 
 #| Writes an XML comment
-proto method writeComment(Str:D $content) {*}
+proto method writeComment(Str:D $content --> UInt) {*}
 multi method writeComment(Str:D $content where .contains('<!--')) {
     $.writeComment: $content.split(/'<!--'/).join('< !--');
 }
@@ -105,61 +105,61 @@ proto method writeCDATA(Str:D $content) returns UInt {*}
 $bytes-written = $writer.writeCDATA: 'A&B'; # output: <![CDATA[A&B]]>
 =end code
 
-multi method writeCDATA(Str:D $content where .contains(']]>')) {
+multi method writeCDATA(Str:D $content where .contains(']]>') --> UInt) {
     $content.split(/<?after ']'><?before ']>'>/).map({ $.writeCDATA($_) }).sum;
 }
-multi method writeCDATA(Str:D $content) { self!write('writeCDATA', $content)}
+multi method writeCDATA(Str:D $content --> UInt) { self!write('writeCDATA', $content)}
 
 #| Writes a string, with encoding
-multi method writeRaw(Str:D $content) { $.writeRaw: $content.encode($!enc) }
+multi method writeRaw(Str:D $content --> UInt) { $.writeRaw: $content.encode($!enc) }
 
 #| Writes a pre-encoded buffer directly
-multi method writeRaw(blob8:D $content, UInt $len = $content.bytes) { self!write('writeRawLen', $content, $len)}
+multi method writeRaw(blob8:D $content, UInt $len = $content.bytes --> UInt) { self!write('writeRawLen', $content, $len)}
 
 #| Writes an XML Processing Instruction
-method writePI(QName $name, Str $content) { self!write('writePI', $name, $content)}
+method writePI(QName $name, Str $content --> UInt) { self!write('writePI', $name, $content)}
 
 =head3 DTD Methods
 
 #| Writes an atomic XML DOCTYPE Definition (DTD)
-method writeDTD(NCName $name, Str :$public-id, Str :$system-id, Str :$subset) { self!write('writeDTD', $name, $public-id, $system-id, $subset)}
+method writeDTD(NCName $name, Str :$public-id, Str :$system-id, Str :$subset --> UInt) { self!write('writeDTD', $name, $public-id, $system-id, $subset)}
 
 #| Starts an XML DOCTYPE Definition (DTD)
-method startDTD(NCName $name, Str :$public-id, Str :$system-id) { self!write('startDTD', $name, $public-id, $system-id)}
+method startDTD(NCName $name, Str :$public-id, Str :$system-id --> UInt) { self!write('startDTD', $name, $public-id, $system-id)}
 =para The methods below can then be used to add definitions for DTD Elements, Attribute Lists, Entities and Notations, before calling `endDTD`.
 
 #| Ends an XML DOCTYPE Definition (DTD)
-method endDTD() { self!write('endDTD')}
+method endDTD(--> UInt) { self!write('endDTD')}
 
 #| Starts an Element definition with an XML DTD
-method startDTDElement(QName $name) { self!write('startDTDElement', $name)}
+method startDTDElement(QName $name --> UInt) { self!write('startDTDElement', $name)}
 
 #| Ends an XML DTD element definition
-method endDTDElement { self!write('endDTDElement')}
+method endDTDElement( --> UInt) { self!write('endDTDElement')}
 
 #| Writes an Element declaration within an XML DTD
-method writeDTDElement(QName $name, Str:D $content = '(EMPTY*)') { self!write('writeDTDElement', $name, $content)}
+method writeDTDElement(QName $name, Str:D $content = '(EMPTY*)' --> UInt) { self!write('writeDTDElement', $name, $content)}
 
 #| Writes an Attribute List declaration within an XML DTD
-method writeDTDAttlist(QName $name, Str $content) { self!write('writeDTDAttlist', $name, $content)}
+method writeDTDAttlist(QName $name, Str $content --> UInt) { self!write('writeDTDAttlist', $name, $content)}
 
 #| Starts an entity definition within an XML DTD
-method startDTDEntity(QName $name, Int :$pe) { self!write('startDTDEntity', $pe, $name)}
+method startDTDEntity(QName $name, Int :$pe --> UInt) { self!write('startDTDEntity', $pe, $name)}
 
 #| Ends an XML DTD Entity definition
-method endDTDEntity { self!write('endDTDEntity')}
+method endDTDEntity returns UInt { self!write('endDTDEntity')}
 
 #| Writes an Internal Entity definition within an XML DTD
-method writeDTDInternalEntity(QName $name, Str:D $content, Int :$pe) { self!write('writeDTDInternalEntity', $pe, $name, $content)}
+method writeDTDInternalEntity(QName $name, Str:D $content, Int :$pe --> UInt) { self!write('writeDTDInternalEntity', $pe, $name, $content)}
 
 #| Writes an external entity definition within an XML DTD
-method writeDTDExternalEntity(NCName $name, Str :$public-id, Str :$system-id, Str :$ndata, Int :$pe) { self!write('writeDTDExternalEntity', $pe, $name, $public-id, $system-id, $ndata)}
+method writeDTDExternalEntity(NCName $name, Str :$public-id, Str :$system-id, Str :$ndata, Int :$pe --> UInt) { self!write('writeDTDExternalEntity', $pe, $name, $public-id, $system-id, $ndata)}
 
 #| Writes a notation definition within an XML DTD
-method writeDTDNotation(NCName $name, Str :$public-id, Str :$system-id) { self!write('writeDTDNotation', $name, $public-id, $system-id)}
+method writeDTDNotation(NCName $name, Str :$public-id, Str :$system-id --> UInt) { self!write('writeDTDNotation', $name, $public-id, $system-id)}
 
 #| Writes an AST structure
-proto method write($ast) {*}
+proto method write($ast --> UInt) {*}
 
 multi method write(Pair $_) {
     my $name = .key;
@@ -221,7 +221,7 @@ multi method write(Positional $value) { self.write: $_ for $value.list }
 multi method write(Str:D() $value) { self.writeText: $value }
 
 #| Flush an buffered XML
-method flush { self!write('flush')}
+method flush returns UInt { self!write('flush')}
 
 #| Finish writing XML. Flush output and free the native XML Writer
 method close {

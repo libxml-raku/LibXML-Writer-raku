@@ -25,7 +25,7 @@ Ensure libxml2 has been compiled with the text-writer enabled
 ```raku
 method setIndented(
     Bool:D(Any):D $indented = Bool::True
-) returns Mu
+) returns UInt
 ```
 
 Enable or disable indentation
@@ -35,7 +35,7 @@ Enable or disable indentation
 ```raku
 method setIndentString(
     Str:D $indent
-) returns Mu
+) returns UInt
 ```
 
 Set indentation text
@@ -45,7 +45,7 @@ Set indentation text
 ```raku
 method setQuoteChar(
     Str:D $quote
-) returns Mu
+) returns UInt
 ```
 
 Set character for quoting attributes
@@ -59,7 +59,7 @@ method startDocument(
     Str :$version,
     Str:D :$!enc = "UTF-8",
     Bool :$standalone
-) returns Mu
+) returns UInt
 ```
 
 Starts the document and writes the XML declaration
@@ -67,7 +67,7 @@ Starts the document and writes the XML declaration
 ### method endDocument
 
 ```raku
-method endDocument() returns Mu
+method endDocument() returns UInt
 ```
 
 Closes any open elements or attributes and finishes the document
@@ -79,7 +79,7 @@ Closes any open elements or attributes and finishes the document
 ```raku
 method startElement(
     Str $name where { ... }
-) returns Mu
+) returns UInt
 ```
 
 Writes the specified start tag
@@ -91,7 +91,7 @@ method startElementNS(
     Str $local-name where { ... },
     Str :$prefix,
     Str :$uri
-) returns Mu
+) returns UInt
 ```
 
 Writes the specified start tag and associates it with the given name-space and prefix
@@ -99,7 +99,7 @@ Writes the specified start tag and associates it with the given name-space and p
 ### method endElement
 
 ```raku
-method endElement() returns Mu
+method endElement() returns UInt
 ```
 
 Closes the current element
@@ -110,7 +110,7 @@ Closes the current element
 method writeAttribute(
     Str $name where { ... },
     Str $content
-) returns Mu
+) returns UInt
 ```
 
 Writes an XML attribute, within an element
@@ -123,7 +123,7 @@ method writeAttributeNS(
     Str $content,
     Str :$prefix,
     Str :$uri
-) returns Mu
+) returns UInt
 ```
 
 Writes an XML attribute with an associated name-space and prefix, within an element
@@ -134,7 +134,7 @@ Writes an XML attribute with an associated name-space and prefix, within an elem
 method writeElement(
     Str $name where { ... },
     Str $content?
-) returns Mu
+) returns UInt
 ```
 
 Writes an atomic element; Either empty or with the given content
@@ -147,7 +147,7 @@ method writeElementNS(
     Str $content = "",
     Str :$prefix,
     Str :$uri
-) returns Mu
+) returns UInt
 ```
 
 Writes an atomic element with an associated name-space and prefix
@@ -157,7 +157,7 @@ Writes an atomic element with an associated name-space and prefix
 ```raku
 method writeComment(
     Str:D $content
-) returns Mu
+) returns UInt
 ```
 
 Writes an XML comment
@@ -195,7 +195,7 @@ $bytes-written = $writer.writeCDATA: 'A&B'; # output: <![CDATA[A&B]]>
 ```raku
 multi method writeRaw(
     Str:D $content
-) returns Mu
+) returns UInt
 ```
 
 Writes a string, with encoding
@@ -206,7 +206,7 @@ Writes a string, with encoding
 multi method writeRaw(
     Blob[uint8]:D $content,
     Int $len where { ... } = Code.new
-) returns Mu
+) returns UInt
 ```
 
 Writes a pre-encoded buffer directly
@@ -217,7 +217,7 @@ Writes a pre-encoded buffer directly
 method writePI(
     Str $name where { ... },
     Str $content
-) returns Mu
+) returns UInt
 ```
 
 Writes an XML Processing Instruction
@@ -232,7 +232,7 @@ method writeDTD(
     Str :$public-id,
     Str :$system-id,
     Str :$subset
-) returns Mu
+) returns UInt
 ```
 
 Writes an atomic XML DOCTYPE Definition (DTD)
@@ -244,7 +244,7 @@ method startDTD(
     Str $name where { ... },
     Str :$public-id,
     Str :$system-id
-) returns Mu
+) returns UInt
 ```
 
 Starts an XML DOCTYPE Definition (DTD)
@@ -254,7 +254,7 @@ The methods below can then be used to add definitions for DTD Elements, Attribut
 ### method endDTD
 
 ```raku
-method endDTD() returns Mu
+method endDTD() returns UInt
 ```
 
 Ends an XML DOCTYPE Definition (DTD)
@@ -264,7 +264,7 @@ Ends an XML DOCTYPE Definition (DTD)
 ```raku
 method startDTDElement(
     Str $name where { ... }
-) returns Mu
+) returns UInt
 ```
 
 Starts an Element definition with an XML DTD
@@ -272,7 +272,7 @@ Starts an Element definition with an XML DTD
 ### method endDTDElement
 
 ```raku
-method endDTDElement() returns Mu
+method endDTDElement() returns UInt
 ```
 
 Ends an XML DTD element definition
@@ -283,7 +283,7 @@ Ends an XML DTD element definition
 method writeDTDElement(
     Str $name where { ... },
     Str:D $content = "(EMPTY*)"
-) returns Mu
+) returns UInt
 ```
 
 Writes an Element declaration within an XML DTD
@@ -294,7 +294,7 @@ Writes an Element declaration within an XML DTD
 method writeDTDAttlist(
     Str $name where { ... },
     Str $content
-) returns Mu
+) returns UInt
 ```
 
 Writes an Attribute List declaration within an XML DTD
@@ -305,7 +305,7 @@ Writes an Attribute List declaration within an XML DTD
 method startDTDEntity(
     Str $name where { ... },
     Int :$pe
-) returns Mu
+) returns UInt
 ```
 
 Starts an entity definition within an XML DTD
@@ -313,7 +313,7 @@ Starts an entity definition within an XML DTD
 ### method endDTDEntity
 
 ```raku
-method endDTDEntity() returns Mu
+method endDTDEntity() returns UInt
 ```
 
 Ends an XML DTD Entity definition
@@ -325,7 +325,7 @@ method writeDTDInternalEntity(
     Str $name where { ... },
     Str:D $content,
     Int :$pe
-) returns Mu
+) returns UInt
 ```
 
 Writes an Internal Entity definition within an XML DTD
@@ -339,7 +339,7 @@ method writeDTDExternalEntity(
     Str :$system-id,
     Str :$ndata,
     Int :$pe
-) returns Mu
+) returns UInt
 ```
 
 Writes an external entity definition within an XML DTD
@@ -351,7 +351,7 @@ method writeDTDNotation(
     Str $name where { ... },
     Str :$public-id,
     Str :$system-id
-) returns Mu
+) returns UInt
 ```
 
 Writes a notation definition within an XML DTD
@@ -361,7 +361,7 @@ Writes a notation definition within an XML DTD
 ```raku
 method write(
     $ast
-) returns Mu
+) returns UInt
 ```
 
 Writes an AST structure
@@ -369,7 +369,7 @@ Writes an AST structure
 ### method flush
 
 ```raku
-method flush() returns Mu
+method flush() returns UInt
 ```
 
 Flush an buffered XML
