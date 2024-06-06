@@ -72,6 +72,6 @@ method close {
 
 This class allows document construction via an externally defined L<LibXML::PushParser> object.
 
-It is most likely to be useful if the XML is to be consumed via a LibXML SAX handler.
+It extends L<LibXML::PushParser>, allowing structural elements to be mixed in with document elements.
 
 =end pod

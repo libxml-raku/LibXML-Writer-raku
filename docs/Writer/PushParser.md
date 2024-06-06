@@ -46,5 +46,5 @@ Description
 
 This class allows document construction via an externally defined [LibXML::PushParser](https://libxml-raku.github.io/LibXML-raku/PushParser) object.
 
-It is most likely to be useful if the XML is to be consumed via a LibXML SAX handler.
+It extends [LibXML::PushParser](https://libxml-raku.github.io/LibXML-raku/PushParser), allowing structural elements to be mixed in with document elements.
 
