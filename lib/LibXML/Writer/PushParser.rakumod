@@ -40,7 +40,7 @@ method close {
 
     =begin code :lang<raku>
     use LibXML::Writer::PushParser;
-    use  LibXML::SAX::Handler::SAX2;
+    use LibXML::SAX::Handler::SAX2;
     class SAXShouter is LibXML::SAX::Handler::SAX2 {
         use LibXML::SAX::Builder :sax-cb;
         method startElement($name, |c) is sax-cb {
@@ -57,7 +57,7 @@ method close {
     my SAXShouter $sax-handler .= new;
     my LibXML::Writer::PushParser $writer .= new: :$sax-handler;
 
-    $writer.startDocument();
+    $writer.startDocument;
     $writer.startElement('Foo');
     $writer.startElement('Bar');
     $writer.endElement;
@@ -70,8 +70,9 @@ method close {
 
 =head2 Description
 
-This class allows document construction via an externally defined L<LibXML::PushParser> object.
+This class allows document construction via an externally defined L<LibXML::PushParser> object. It extends this, allowing structural elements to be mixed in with document elements.
 
-It extends L<LibXML::PushParser>, allowing structural elements to be mixed in with document elements.
+A L<LibXML::SAX::Handler> object can optionally be used to intercept or modify
+parsing events and parser behaviour.
 
 =end pod

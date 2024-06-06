@@ -13,7 +13,7 @@ Synopsis
 
 ```raku
 use LibXML::Writer::PushParser;
-use  LibXML::SAX::Handler::SAX2;
+use LibXML::SAX::Handler::SAX2;
 class SAXShouter is LibXML::SAX::Handler::SAX2 {
     use LibXML::SAX::Builder :sax-cb;
     method startElement($name, |c) is sax-cb {
@@ -30,7 +30,7 @@ class SAXShouter is LibXML::SAX::Handler::SAX2 {
 my SAXShouter $sax-handler .= new;
 my LibXML::Writer::PushParser $writer .= new: :$sax-handler;
 
-$writer.startDocument();
+$writer.startDocument;
 $writer.startElement('Foo');
 $writer.startElement('Bar');
 $writer.endElement;
@@ -44,7 +44,7 @@ say $doc.Str; # <?xml version="1.0" encoding="UTF-8"?><FOO><BAR/><BAZ/></FOO>
 Description
 -----------
 
-This class allows document construction via an externally defined [LibXML::PushParser](https://libxml-raku.github.io/LibXML-raku/PushParser) object.
+This class allows document construction via an externally defined [LibXML::PushParser](https://libxml-raku.github.io/LibXML-raku/PushParser) object. It extends this, allowing structural elements to be mixed in with document elements.
 
-It extends [LibXML::PushParser](https://libxml-raku.github.io/LibXML-raku/PushParser), allowing structural elements to be mixed in with document elements.
+A [LibXML::SAX::Handler](https://libxml-raku.github.io/LibXML-raku/SAX/Handler) object can optionally be used to intercept or modify parsing events and parser behaviour.
 
