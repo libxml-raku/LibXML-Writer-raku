@@ -1,5 +1,6 @@
 use Test;
 use LibXML::Writer::PushParser;
+use LibXML::Document;
 
 plan 1;
 
@@ -30,10 +31,9 @@ subtest 'push-parser', {
     $writer.startElement('Foo');
     $writer.startElement('Bar');
     $writer.endElement;
-    $writer.flush;
     $writer.push('<Baz/>');
     $writer.endElement;
     $writer.endDocument;
-    my $doc = $writer.finish-push;
+    my LibXML::Document:D $doc = $writer.finish-push;
     is $doc.Str.lines.join, '<?xml version="1.0" encoding="UTF-8"?><FOO><BAR/><BAZ/></FOO>';
 }

@@ -7,13 +7,18 @@ also is LibXML::Writer;
 use LibXML::Raw;
 use LibXML::PushParser;
 
-has LibXML::PushParser $!push-parser handles<push>;
+has LibXML::PushParser $!push-parser;
 
 submethod TWEAK(:$chunk = '', |c) is hidden-from-backtrace {
     $!push-parser .= new: :$chunk, |c;
     my xmlParserCtxt:D $ctxt = $!push-parser.ctxt.raw;
     self.raw .= new(:$ctxt)
         // die X::LibXML::OpFail.new(:what<Write>, :op<NewPushParser>);
+}
+
+method push(|c) {
+    $.flush;
+    $!push-parser.push: |c;
 }
 
 method finish-push(|c) {

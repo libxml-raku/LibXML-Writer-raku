@@ -35,8 +35,6 @@ lives-ok { $writer.write: $ast; }
 is $writer.Str.lines.tail, '<dromedaries><species id="1" name="Camel"><humps>1 or 2</humps><disposition>Cranky</disposition></species><species name="Llama"><humps>1 (sort of)</humps><disposition>Aloof</disposition></species><species name="Alpaca"><humps>(see Llama)</humps><disposition>Friendly</disposition></species></dromedaries>';
 
 my $dromedaries = [
-    :xmlns("urn:camels"),
-    "xmlns:mam" => "urn:mammals",
     :species["Camelid"],
     "mam:legs" => ["xmlns:a" => "urn:a",
                    "xml:lang" => "en",
