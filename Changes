@@ -1,5 +1,7 @@
 {{$NEXT}}
     - Add serialize() method for compatibility with XML::Writer
+    - Flush before pushing in LibXML::Writer::PushParser
+    - Fix ast construction test in ast.t
 
 0.0.2  2023-09-15T06:55:38+12:00
     - Restore README.md. Clobbered in initial release.
