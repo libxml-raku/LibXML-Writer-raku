@@ -40,21 +40,11 @@ method close {
 
     =begin code :lang<raku>
     use LibXML::Writer::PushParser;
-    use LibXML::SAX::Handler::SAX2;
-    class SAXShouter is LibXML::SAX::Handler::SAX2 {
-        use LibXML::SAX::Builder :sax-cb;
-        method startElement($name, |c) is sax-cb {
-            nextwith($name.uc, |c);
-        }
-        method endElement($name, |c) is sax-cb {
-            nextwith($name.uc, |c);
-        }
-        method characters($chars, |c) is sax-cb {
-            nextwith($chars.uc, |c);
-        }
-    }
 
+    #| Converts element and attribute names to uppercase
+    class SAXShouter {...}
     my SAXShouter $sax-handler .= new;
+
     my LibXML::Writer::PushParser $writer .= new: :$sax-handler;
 
     $writer.startDocument;
@@ -66,6 +56,22 @@ method close {
     $writer.endDocument;
     my $doc = $writer.finish-push;
     say $doc.Str; # <?xml version="1.0" encoding="UTF-8"?><FOO><BAR/><BAZ/></FOO>
+
+    class SAXShouter {
+        use LibXML::SAX::Builder :sax-cb;
+        use LibXML::SAX::Handler::SAX2;
+        also is LibXML::SAX::Handler::SAX2;
+
+        method startElement($name, |c) is sax-cb {
+            nextwith($name.uc, |c);
+        }
+        method endElement($name, |c) is sax-cb {
+            nextwith($name.uc, |c);
+        }
+        method characters($chars, |c) is sax-cb {
+            nextwith($chars.uc, |c);
+        }
+    }
     =end code
 
 =head2 Description
