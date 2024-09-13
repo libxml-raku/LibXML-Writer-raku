@@ -35,6 +35,6 @@ say $writer.doc.Str;
 
 =head2 Description
 
-This output class allows a document to be constructed via L<LibXML::Writer>.
+This output class allows a L<LibXML::Document> object to be constructed via L<LibXML::Writer>.
 
 =end pod

@@ -76,7 +76,8 @@ method close {
 
 =head2 Description
 
-This class allows document construction via an externally defined L<LibXML::PushParser> object. It extends this, allowing structural elements to be mixed in with document elements.
+This class allows document construction via an externally defined L<LibXML::PushParser> object.
+It extends this, allowing structural elements to be mixed in with document elements.
 
 A L<LibXML::SAX::Handler> object can optionally be used to intercept or modify
 parsing events and parser behaviour.

@@ -14,7 +14,7 @@ Synopsis
 ```raku
 use LibXML::Writer::File;
 use File::Temp;
-my (Str:D $file) = tempfile();
+my (Str:D $file, IO::Handle $ioh) = tempfile();
 my LibXML::Writer::File $writer .= new: :$file;
 
 $writer.startDocument();
@@ -22,8 +22,7 @@ $writer.startElement('Baz');
 $writer.endElement;
 $writer.endDocument;
 $writer.close;
-my $io = $file.IO;
-say $io.lines.join;  # <?xml version="1.0" encoding="UTF-8"?><Baz/>;
+say $ioh.lines.join;  # <?xml version="1.0" encoding="UTF-8"?><Baz/>;
 ```
 
 Description
