@@ -32,5 +32,5 @@ Description
 
 This class writes to an in-memory buffer. The final XML document can then be rendered using the `Str` or `Blob` methods.
 
-A class-level `serialize method is also provided for compatibility with [XML::Writer](https://raku.land/github:masak/XML::Writer).
+A class-level `serialize method is also provided for compatibility with [XML::Writer](https://github.com/Raku/REA/tree/main/archive/X/XML%3A%3AWriter).
 

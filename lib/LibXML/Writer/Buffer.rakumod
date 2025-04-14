@@ -57,6 +57,6 @@ XML document can then be rendered using the `Str` or
 `Blob` methods.
 
 A class-level `serialize method is also provided for
-compatibility with L<XML::Writer|https://raku.land/github:masak/XML::Writer>.
+compatibility with L<XML::Writer|https://github.com/Raku/REA/tree/main/archive/X/XML%3A%3AWriter>.
 
 =end pod
