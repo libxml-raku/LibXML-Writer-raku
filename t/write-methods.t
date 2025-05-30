@@ -40,8 +40,8 @@ subtest 'writeAttribute', {
 subtest 'setIndent', {
     is $writer.&tail({ .setIndented; .writeElement('Yyy') }), ' <Yyy/>';
     is $writer.&tail({ .setIndentString("   "); .writeElement('Zzz') }), '   <Zzz/>';
-    is $writer.&tail({ .setIndentString("   "); .startElement('Zzz'); .writeText('text'); .writeElement('E'); .endElement(); }), '   <Zzz>text<E/></Zzz>';
-    is $writer.&tail({ .setIndentString("<!--X-->"); .writeElement('Zzz') }), '<!--X--><Zzz/>';
+    is $writer.&tail({ .setIndentString("   "); .startElement('Zzz'); .setIndented(False); .writeText('text'); .writeElement('E'); .endElement(); }), '   <Zzz>text<E/></Zzz>';
+    is $writer.&tail({  .setIndented; .setIndentString("<!--X-->"); .writeElement('Zzz') }), '<!--X--><Zzz/>';
     $writer.setIndented(False);
     is $writer.&tail({ .writeElement('Zzz') }), '<Zzz/>';
 }
