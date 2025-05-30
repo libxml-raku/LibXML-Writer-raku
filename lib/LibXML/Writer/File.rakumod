@@ -36,4 +36,6 @@ submethod TWEAK is hidden-from-backtrace {
 This output class enables efficient low-memory streaming of an XML
 document directly to a file.
 
+Note that if 'C<->' is used as a filename, output is streamed to standard-output.
+
 =end pod

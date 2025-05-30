@@ -40,8 +40,14 @@ multi sub trait_mod:<is>(
 
 #| Enable or disable indentation
 method setIndented(Bool:D() $indented = True --> UInt) {  self!write('setIndented', $indented); }
+=para When indentation is enabled, L<LibXML::Writer> will output each element, followed by a newline and output the indentation text times the current indentation level before writing elements and strings.
+
+=para The C<writeText()> method does not output an extra new-line, but does output indentation text. You will need to ensure the text is followed by a new-line.
+
 #| Set indentation text
 method setIndentString(Str:D $indent --> UInt)  {  self!write('setIndentString', $indent); }
+=para The default is a single space character C<' '>.
+
 #| Set character for quoting attributes
 method setQuoteChar(Str:D $quote --> UInt) { self!write('setQuoteChar', $quote.ord); }
 

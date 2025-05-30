@@ -30,3 +30,5 @@ Description
 
 This output class enables efficient low-memory streaming of an XML document directly to a file.
 
+Note that if '`-`' is used as a filename, output is streamed to standard-output.
+
