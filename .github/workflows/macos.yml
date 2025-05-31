@@ -14,7 +14,6 @@ jobs:
       matrix:
         os:
           - macOS-latest
-          - macOS-11
         raku-version:
           - 'latest'
           - '2022.02'
