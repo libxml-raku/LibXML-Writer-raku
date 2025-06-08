@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+0.0.4  2025-06-09T08:51:55+12:00
+    - Add basic Dtd handling to write-ast() method. Bring up-to-date
+      with LibXML 0.10.14+
+
 0.0.3  2024-06-07T10:12:27+12:00
     - Add serialize() method for compatibility with XML::Writer
     - Flush before pushing in LibXML::Writer::PushParser
