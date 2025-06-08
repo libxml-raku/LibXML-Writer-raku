@@ -201,6 +201,12 @@ multi method write(Pair $_) {
         $name ~= ';' unless $name.ends-with(';');
         self.writeRaw( $name );
     }
+    when $name.starts-with('!') {
+        $name .= substr(1);
+        my Str $system-id = $_ with $value<system>;
+        my Str $public-id = $_ with $value<public>;
+        self.writeDTD($name, :$system-id, :$public-id);
+    }
     default {
        given $node-type {
             when XML_ELEMENT_NODE { self.startElement($name) }
