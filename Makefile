@@ -39,5 +39,5 @@ docs/index.md : README.md
 docs/%.md : lib/LibXML/%.rakumod
 	@raku -I . -c $<
 	raku -I . --doc=Markdown $< \
-	| TRAIL=LibXML/Writer/$* raku -p -n $(DocLinker) \
+	| TRAIL=LibXML/$* raku -p -n $(DocLinker) \
         > $@

@@ -30,7 +30,7 @@ method setIndented(
 
 Enable or disable indentation
 
-When indentation is enabled, [LibXML::Writer](https://libxml-raku.github.io/LibXML-Writer-raku) will output each element, followed by a newline and output the indentation text times the current indentation level before writing elements and strings.
+When indentation is enabled, [LibXML::Writer](https://libxml-raku.github.io/LibXML-Writer-raku/Writer) will output each element, followed by a newline and output the indentation text times the current indentation level before writing elements and strings.
 
 The `writeText()` method does not output an extra new-line, but does output indentation text. You will need to ensure the text is followed by a new-line.
 

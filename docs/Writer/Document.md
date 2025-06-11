@@ -25,5 +25,5 @@ say $writer.doc.Str;
 Description
 -----------
 
-This output class allows a [LibXML::Document](https://libxml-raku.github.io/LibXML-raku/Document) object to be constructed via [LibXML::Writer](https://libxml-raku.github.io/LibXML-Writer-raku).
+This output class allows a [LibXML::Document](https://libxml-raku.github.io/LibXML-raku/Document) object to be constructed via [LibXML::Writer](https://libxml-raku.github.io/LibXML-Writer-raku/Writer).
 

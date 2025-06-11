@@ -206,6 +206,7 @@ multi method write(Pair $_) {
         my Str $system-id = $_ with $value<system>;
         my Str $public-id = $_ with $value<public>;
         self.writeDTD($name, :$system-id, :$public-id);
+        self.writeRaw("\n");
     }
     default {
        given $node-type {
@@ -228,7 +229,7 @@ multi method write(Pair $_) {
     }
 }
 
-multi method write(Positional $value) { self.write: $_ for $value.list }
+multi method write(Positional $value) { dd $_; sleep .01; self.write: $_ for $value.list }
 
 multi method write(Str:D() $value) { self.writeText: $value }
 

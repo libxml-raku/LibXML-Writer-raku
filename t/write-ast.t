@@ -33,7 +33,11 @@ my $ast = "#xml" => [
 $writer .= new;
 lives-ok { $writer.write: $ast; }
 
-is $writer.Str.lines.tail, '<!DOCTYPE dromedaries SYSTEM "http://example.com/dromedaries.dtd"><dromedaries><species id="1" name="Camel"><humps>1 or 2</humps><disposition>Cranky</disposition></species><species name="Llama"><humps>1 (sort of)</humps><disposition>Aloof</disposition></species><species name="Alpaca"><humps>(see Llama)</humps><disposition>Friendly</disposition></species></dromedaries>';
+is-deeply $writer.Str.lines, (
+'<?xml version="1.0" encoding="UTF-8"?>',
+'<!DOCTYPE dromedaries SYSTEM "http://example.com/dromedaries.dtd">',
+'<dromedaries><species id="1" name="Camel"><humps>1 or 2</humps><disposition>Cranky</disposition></species><species name="Llama"><humps>1 (sort of)</humps><disposition>Aloof</disposition></species><species name="Alpaca"><humps>(see Llama)</humps><disposition>Friendly</disposition></species></dromedaries>'
+);
 
 my $dromedaries = [
     :species["Camelid"],
