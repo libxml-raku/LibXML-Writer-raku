@@ -17,7 +17,7 @@ use LibXML::Element;
 use LibXML::Writer::Node;
 my LibXML::Document $doc .= new;
 # concurrent sub-tree construction
-my LibXML::Element @elems = (1.10).hyper.map: {
+my LibXML::Element @twigs = (1.10).hyper.map: {
     my LibXML::Element $node = $doc.createElement('Bar');
     my LibXML::Writer::Node $writer .= new: :$node;
 
@@ -28,7 +28,7 @@ my LibXML::Element @elems = (1.10).hyper.map: {
     $writer.node;
 }
 my $root = $doc.createElement('Foo');
-$root.addChild($_) for @elems;
+$root.addChild($_) for @twigs;
 $doc.root = $root;
 say $writer.Str;
 say $doc.Str;

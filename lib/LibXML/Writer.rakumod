@@ -4,6 +4,7 @@ unit class LibXML::Writer;
 use LibXML::_Configurable;
 also does LibXML::_Configurable;
 
+use LibXML::Config;
 use LibXML::Raw;
 use LibXML::Raw::TextWriter;
 use LibXML::Types :QName, :NCName;
@@ -19,9 +20,7 @@ has Str $.enc = 'UTF-8';
 =head2 Methods
 
 #| Ensure libxml2 has been compiled with the text-writer enabled
-method have-writer returns Bool {
-    ? xml6_config_have_libxml_writer();
-}
+method have-writer returns Bool { LibXML::Config.have-writer }
 
 method !write(Str:D $op, |c) is hidden-from-backtrace {
     my Int $rv := $!raw."$op"(|c);
