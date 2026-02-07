@@ -1,5 +1,8 @@
 {{$NEXT}}
-    - Remove stray debugging
+
+0.0.5  2026-02-08T10:15:20+13:00
+    - Add a newline after Dtd AST definition. Fixes a minor
+      inconsistancy with LibXML::Item ast-to-xml().
     - Directly call xmlHasFeature() to detect writer availibilty
 
 0.0.4  2025-06-09T08:51:55+12:00
