@@ -4,7 +4,6 @@ unit class LibXML::Writer;
 use LibXML::_Configurable;
 also does LibXML::_Configurable;
 
-use LibXML::Config;
 use LibXML::Raw;
 use LibXML::Raw::TextWriter;
 use LibXML::Types :QName, :NCName;
@@ -20,7 +19,7 @@ has Str $.enc = 'UTF-8';
 =head2 Methods
 
 #| Ensure libxml2 has been compiled with the text-writer enabled
-method have-writer returns Bool { LibXML::Config.have-writer }
+method have-writer returns Bool { ? xmlHasFeature(XML_WITH_WRITER) }
 
 method !write(Str:D $op, |c) is hidden-from-backtrace {
     my Int $rv := $!raw."$op"(|c);
@@ -228,7 +227,7 @@ multi method write(Pair $_) {
     }
 }
 
-multi method write(Positional $value) { dd $_; sleep .01; self.write: $_ for $value.list }
+multi method write(Positional $value) { self.write: $_ for $value.list }
 
 multi method write(Str:D() $value) { self.writeText: $value }
 

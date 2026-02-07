@@ -6,7 +6,7 @@
   "build-depends": [
   ],
   "depends": [
-    "LibXML:ver<0.9.5+>"
+    "LibXML:ver<0.11.0+>"
   ],
   "description": "Raku bindings to the libxml2 streaming writer",
   "license": "Artistic-2.0",

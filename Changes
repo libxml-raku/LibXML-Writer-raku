@@ -1,4 +1,6 @@
 {{$NEXT}}
+    - Remove stray debugging
+    - Directly call xmlHasFeature() to detect writer availibilty
 
 0.0.4  2025-06-09T08:51:55+12:00
     - Add basic Dtd handling to write-ast() method. Bring up-to-date
