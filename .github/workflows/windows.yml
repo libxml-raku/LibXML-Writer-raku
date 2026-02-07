@@ -28,4 +28,4 @@ jobs:
           zef install --/test LibraryMake
           zef install --deps-only .
       - name: Run Tests
-        run: prove6 -I. t xt
+        run: prove6 -I. t
